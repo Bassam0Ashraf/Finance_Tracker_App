@@ -1,0 +1,20 @@
+{
+  "name": "personal-finance-tracker-tests",
+  "version": "1.0.0",
+  "main": "Test.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "scripts": {
+    "test": "mocha Test.js --timeout 60000"
+  },
+  "dependencies": {
+    "chromedriver": "^143.0.3",
+    "selenium-webdriver": "^4.38.0"
+  },
+  "devDependencies": {
+    "chai": "^6.2.1",
+    "mocha": "^11.7.5"
+  }
+}

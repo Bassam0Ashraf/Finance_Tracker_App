@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .form-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .transactions {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        
+        .summary-card h3 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .summary-card .amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .income { color: #28a745; }
+        .expense { color: #dc3545; }
+        .balance { color: #17a2b8; }
+        
+        .transaction-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #f1f3f4;
+            background: white;
+        }
+        
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+        
+        .transaction-info h4 {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .transaction-info p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .transaction-amount {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .error {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Personal Finance Tracker</h1>
+            <p>Manage your income and expenses efficiently</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="form-section">
+                <h2>Add Transaction</h2>
+                <form id="transactionForm">
+                    <div class="form-group">
+                        <label for="description">Description *</label>
+                        <input type="text" id="description" name="description" required>
+                        <div class="error" id="descriptionError">Description is required</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount">Amount *</label>
+                        <input type="number" id="amount" name="amount" step="0.01" required>
+                        <div class="error" id="amountError">Please enter a valid amount</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="type">Type *</label>
+                        <select id="type" name="type" required>
+                            <option value="">Select Type</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                        <div class="error" id="typeError">Please select a type</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="">Select Category</option>
+                            <option value="food">Food & Dining</option>
+                            <option value="transport">Transportation</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="bills">Bills & Utilities</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="investment">Investment</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Additional notes (optional)"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="submitBtn">Add Transaction</button>
+                </form>
+            </div>
+            
+            <div class="transactions">
+                <h2>Financial Overview</h2>
+                
+                <div class="summary">
+                    <div class="summary-card">
+                        <h3>Total Income</h3>
+                        <div class="amount income" id="totalIncome">$0.00</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Total Expenses</h3>
+                        <div class="amount expense" id="totalExpenses">$0.00</div>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Balance</h3>
+                        <div class="amount balance" id="balance">$0.00</div>
+                    </div>
+                </div>
+                
+                <div class="loading" id="loading">Loading transactions...</div>
+                
+                <div class="transaction-list" id="transactionList">
+                    <div style="padding: 20px; text-align: center; color: #6c757d;">
+                        No transactions yet. Add your first transaction!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class FinanceTracker {
+            constructor() {
+                this.transactions = this.loadFromStorage();
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.updateUI();
+                this.setDefaultDate();
+            }
+            
+            setupEventListeners() {
+                const form = document.getElementById('transactionForm');
+                form.addEventListener('submit', (e) => this.handleSubmit(e));
+                
+                // Real-time validation
+                const inputs = form.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    input.addEventListener('blur', () => this.validateField(input));
+                    input.addEventListener('input', () => this.clearError(input));
+                });
+            }
+            
+            setDefaultDate() {
+                const dateInput = document.getElementById('date');
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.value = today;
+            }
+            
+            validateField(field) {
+                const errorElement = document.getElementById(field.name + 'Error');
+                let isValid = true;
+                
+                switch(field.name) {
+                    case 'description':
+                        if (!field.value.trim()) {
+                            this.showError(errorElement, 'Description is required');
+                            isValid = false;
+                        } else if (field.value.length > 100) {
+                            this.showError(errorElement, 'Description must be less than 100 characters');
+                            isValid = false;
+                        }
+                        break;
+                        
+                    case 'amount':
+                        const amount = parseFloat(field.value);
+                        if (!field.value || isNaN(amount) || amount <= 0) {
+                            this.showError(errorElement, 'Please enter a valid positive amount');
+                            isValid = false;
+                        } else if (amount > 1000000) {
+                            this.showError(errorElement, 'Amount seems too large');
+                            isValid = false;
+                        }
+                        break;
+                        
+                    case 'type':
+                        if (!field.value) {
+                            this.showError(errorElement, 'Please select a type');
+                            isValid = false;
+                        }
+                        break;
+                }
+                
+                return isValid;
+            }
+            
+            showError(errorElement, message) {
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+            }
+            
+            clearError(field) {
+                const errorElement = document.getElementById(field.name + 'Error');
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                }
+            }
+            
+            handleSubmit(e) {
+                e.preventDefault();
+                
+                const form = e.target;
+                const formData = new FormData(form);
+                const transaction = {};
+                
+                // Validate all fields
+                let isValid = true;
+                const inputs = form.querySelectorAll('input[required], select[required]');
+                inputs.forEach(input => {
+                    if (!this.validateField(input)) {
+                        isValid = false;
+                    }
+                });
+                
+                if (!isValid) {
+                    return;
+                }
+                
+                // Build transaction object
+                for (let [key, value] of formData.entries()) {
+                    transaction[key] = value;
+                }
+                
+                // Add metadata
+                transaction.id = Date.now().toString();
+                transaction.amount = parseFloat(transaction.amount);
+                transaction.date = transaction.date || new Date().toISOString().split('T')[0];
+                transaction.timestamp = new Date().toISOString();
+                
+                // Simulate API delay
+                this.showLoading(true);
+                
+                setTimeout(() => {
+                    this.addTransaction(transaction);
+                    form.reset();
+                    this.setDefaultDate();
+                    this.showLoading(false);
+                }, Math.random() * 1000 + 500); // Random delay between 0.5-1.5s
+            }
+            
+            addTransaction(transaction) {
+                this.transactions.unshift(transaction);
+                this.saveToStorage();
+                this.updateUI();
+            }
+            
+            deleteTransaction(id) {
+                if (confirm('Are you sure you want to delete this transaction?')) {
+                    this.transactions = this.transactions.filter(t => t.id !== id);
+                    this.saveToStorage();
+                    this.updateUI();
+                }
+            }
+            
+            updateUI() {
+                this.updateSummary();
+                this.renderTransactions();
+            }
+            
+            updateSummary() {
+                const income = this.transactions
+                    .filter(t => t.type === 'income')
+                    .reduce((sum, t) => sum + t.amount, 0);
+                
+                const expenses = this.transactions
+                    .filter(t => t.type === 'expense')
+                    .reduce((sum, t) => sum + t.amount, 0);
+                
+                const balance = income - expenses;
+                
+                document.getElementById('totalIncome').textContent = `$${income.toFixed(2)}`;
+                document.getElementById('totalExpenses').textContent = `$${expenses.toFixed(2)}`;
+                document.getElementById('balance').textContent = `$${balance.toFixed(2)}`;
+                
+                // Color coding for balance
+                const balanceElement = document.getElementById('balance');
+                balanceElement.className = `amount ${balance >= 0 ? 'income' : 'expense'}`;
+            }
+            
+            renderTransactions() {
+                const container = document.getElementById('transactionList');
+                
+                if (this.transactions.length === 0) {
+                    container.innerHTML = `
+                        <div style="padding: 20px; text-align: center; color: #6c757d;">
+                            No transactions yet. Add your first transaction!
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = this.transactions.map(transaction => `
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>${transaction.description}</h4>
+                            <p>${transaction.category ? transaction.category : 'No category'} • ${transaction.date}</p>
+                            ${transaction.notes ? `<p><em>${transaction.notes}</em></p>` : ''}
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div class="transaction-amount ${transaction.type}">
+                                ${transaction.type === 'income' ? '+' : '-'}$${transaction.amount.toFixed(2)}
+                            </div>
+                            <button class="delete-btn" onclick="tracker.deleteTransaction('${transaction.id}')">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            showLoading(show) {
+                const loading = document.getElementById('loading');
+                const submitBtn = document.getElementById('submitBtn');
+                
+                if (show) {
+                    loading.style.display = 'block';
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Adding...';
+                } else {
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Add Transaction';
+                }
+            }
+            
+            saveToStorage() {
+                localStorage.setItem('financeTracker', JSON.stringify(this.transactions));
+            }
+            
+            loadFromStorage() {
+                const saved = localStorage.getItem('financeTracker');
+                return saved ? JSON.parse(saved) : [];
+            }
+        }
+        
+        // Initialize the app
+        const tracker = new FinanceTracker();
+        
+        // Add some demo data for testing (remove this in production)
+        if (tracker.transactions.length === 0) {
+            const demoTransactions = [
+                {
+                    id: '1',
+                    description: 'Salary Payment',
+                    amount: 3500.00,
+                    type: 'income',
+                    category: 'salary',
+                    date: '2024-01-15',
+                    notes: 'Monthly salary',
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    id: '2',
+                    description: 'Grocery Shopping',
+                    amount: 87.50,
+                    type: 'expense',
+                    category: 'food',
+                    date: '2024-01-14',
+                    notes: 'Weekly groceries',
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    id: '3',
+                    description: 'Gas Bill',
+                    amount: 65.00,
+                    type: 'expense',
+                    category: 'bills',
+                    date: '2024-01-13',
+                    notes: '',
+                    timestamp: new Date().toISOString()
+                }
+            ];
+            
+            tracker.transactions = demoTransactions;
+            tracker.updateUI();
+        }
+    </script>
+</body>
+</html>
