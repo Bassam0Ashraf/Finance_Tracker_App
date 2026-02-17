@@ -297,6 +297,7 @@
         await page.fillAmount(100);
         await page.selectType('income');
         await page.selectCategory('Salary');
+        await page.fillNotes('test note');
 
         // Store balance and total income amount before cilck on add transaction button.
         let balanceBefore = await overview.getBalance();

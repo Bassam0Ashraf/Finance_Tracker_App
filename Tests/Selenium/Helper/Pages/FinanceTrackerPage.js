@@ -203,11 +203,12 @@ class TransactionList
         // Step 2: Return the last transaction (newest transaction)
         const lastItem = await item[0];
 
+        // Step 3: Get the description of last transaction.
         const description = await lastItem.findElement(By.css('h4')).getText();
         console.log('Description:', description);
 
+        // Step 4: Get the category and date of last transaction.
         const categoryDateText = await lastItem.findElement(By.css('.transaction-info p')).getText(); // categoryDateText = "salary • 2026-02-16"
-        // Split by the bullet
         const parts = categoryDateText.split('•'); // parts = ["salary", "2026-02-16"]
 
         const category = parts[0].trim();  // category = "salary"
@@ -216,11 +217,28 @@ class TransactionList
         const date = parts[1].trim();      // date = "2026-02-16"
         console.log('Date:', date);
 
+        // Step 5: Get the amount of last transaction.
         const amountString = await lastItem.findElement(By.className('transaction-amount')).getText();
         let amount = Number(amountString.replace(/[$,]/g, ''));
         console.log('Amount: $', amount);
 
-        return {description, category, date, amount};
+        // Step 6: Get the note of last transaction.
+        let note ='';
+
+        // Will check if note is found or not.
+        try
+        {
+            note = await lastItem.findElement(By.css('.transaction-info em')).getText();
+            console.log('Note:', note);            
+        }
+        catch
+        {
+            note = 'No notes found';
+            console.log(note);
+        }
+
+        // return data in object.
+        return {description, category, date, amount: '$ ' + amount, note};
     }
 }
 
