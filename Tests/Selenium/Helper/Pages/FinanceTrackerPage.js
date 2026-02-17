@@ -4,7 +4,8 @@ const { By, until, Select } = require('selenium-webdriver');
 
 
 class FinanceTrackerPage {
-    constructor(browserdriver) {
+    constructor(browserdriver)
+    {
         // Your code: Save driver
         this.browserdriver = browserdriver;
     }
@@ -12,7 +13,8 @@ class FinanceTrackerPage {
     /***************************
      *      Description        *
      ***************************/
-    async fillDescription(descriptionText) {
+    async fillDescription(descriptionText)
+    {
         // Your code:
         // 1. Find element with ID 'description'
         // 2. Clear it
@@ -26,7 +28,8 @@ class FinanceTrackerPage {
     /***************************
      *        Amount           *
      ***************************/
-    async fillAmount(amountValue) {
+    async fillAmount(amountValue)
+    {
         let amount = await this.browserdriver.wait(until.elementLocated(By.id('amount')), 5000);
         await amount.clear();
         await amount.sendKeys(amountValue);
@@ -37,7 +40,8 @@ class FinanceTrackerPage {
     /***************************
      *         Type            *
      ***************************/
-    async selectType(typeValue) {
+    async selectType(typeValue)
+    {
         // This one is different - it's a dropdown!
         // Hint: You need Select from selenium-webdriver
         // Element ID is 'type'
@@ -60,7 +64,8 @@ class FinanceTrackerPage {
     /***************************
      *        Category         *
      ***************************/
-    async selectCategory(categoryValue) {
+    async selectCategory(categoryValue)
+    {
         const select = await this.browserdriver.wait(until.elementLocated(By.id('category')), 5000);
 
         await select.sendKeys(categoryValue);   // <option value="transport">Transportation</option> type first letter like if you send Transportation its send "T".
@@ -83,7 +88,8 @@ class FinanceTrackerPage {
     /***************************
     *          Date            *
     ***************************/
-    async selectDate(date) {
+    async selectDate(date)
+    {
         await this.browserdriver.findElement(By.id('date')).sendKeys(date);
         await this.browserdriver.findElement(By.id('date')).click();
     }
@@ -92,7 +98,8 @@ class FinanceTrackerPage {
     /***************************
      *        Notes            *
      ***************************/
-    async fillNotes(notesText) {
+    async fillNotes(notesText)
+    {
         let notes = await this.browserdriver.wait(until.elementLocated(By.id('notes')), 5000);
         await notes.clear();
         await notes.sendKeys(notesText);
@@ -103,10 +110,21 @@ class FinanceTrackerPage {
     /***************************
      *       Add Button        *
      ***************************/
-    async addTransaction() {
+    async addTransaction()
+    {
         let addBtn = await this.browserdriver.wait(until.elementLocated(By.id('submitBtn')), 5000);
         await addBtn.click();
         console.log('Transaction add button clicked');
+        
+        // Wait for the loading state to finish
+        // The app shows "Adding..." text during submission
+        await this.browserdriver.wait(async () =>               // Wait for the loading state to finish
+        {   
+            const btnText = await addBtn.getText();       // Get the text of the butto
+            return btnText === 'Add Transaction';         // Wait until it's back to normal "'Add Transaction"
+        }, 5000);
+    
+        console.log('Transaction processing complete');        
     }
 
 }
