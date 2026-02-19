@@ -276,7 +276,7 @@
     *                        - Type: Income.
     *                        - Category: Salary.
     *                   5. Click "Add Transaction".
-    *                   6. Verify Balance amount changed to the amount user entered.
+    *                   6. Verify Verify Last Transaction data.
     *
     * Expected Result : Description Field will accept 1 character.
     *******************************************************************************************************/
@@ -343,11 +343,28 @@
 
     });
 
-/*
-    // TC 4: 100 character at Description Field (Max Lenght)
-    it('TC-004: 100 character at Description Field (Max Lenght)', async function ()
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-004
+    •⁠ ⁠Test Case : 100 characters at Description Field (Max Lenght)
+    
+    •⁠ ⁠Description:  Test when user write 100 characters only at description field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Write 100 characters only description Field. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Amount: 100.
+    *                        - Type: Income.
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Verify Last Transaction data.
+    *
+    * Expected Result : Description Field will accept 100 characters.
+    *******************************************************************************************************/
+    it('TC-004: 100 characters at Description Field (Max Lenght)', async function ()
     {
-        console.log('🔎 TC-004: 100 character at Description Field (Max Lenght)');
+        console.log('🔎 TC-004: 100 characters at Description Field (Max Lenght)');
         // Step 1: Verify that page opened successfully.
         const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
         const HeaderPageText = await HeaderPage.getText();
@@ -357,9 +374,23 @@
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
         console.log('✅ Header assertion passed!');
 
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O4');
+        await page.fillAmount(100);
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 7: Verify Last Transaction data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O4');
+        console.log('✅ Last transaction data assertion passed');
     });
 
-*/
+
 
 
 

@@ -10,7 +10,7 @@
     "test": "mocha Test.js --timeout 60000"
   },
   "dependencies": {
-    "chromedriver": "^143.0.3",
+    "chromedriver": "^145.0.4",
     "selenium-webdriver": "^4.38.0"
   },
   "devDependencies": {
