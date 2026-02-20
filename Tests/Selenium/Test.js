@@ -47,7 +47,7 @@
 
     beforeEach(async function () 
     {
-        console.log('🟢 Step 1: beforeEach started');
+        console.log('\n','🟢 Step 1: beforeEach started');
         
         try {
             console.log('🟢 Step 2: About to create driver...');
@@ -71,10 +71,12 @@
             page = new FinanceTrackerPage(driver);
             overview = new FinancialOverview(driver);
             transcationlist = new TransactionList(driver);
-            console.log('🟢 Step 8: Page object created');
+            console.log('🟢 Step 8: Page object created\n');
             
-        } catch (error) {
-            console.log('🔴 ERROR:', error.message);
+        } catch (error)
+        {
+            console.log('');
+            console.log('\n','🔴 ERROR:', error.message);
             throw error;
         }
         
@@ -83,7 +85,7 @@
 
     afterEach(async function () 
     {
-        console.log('🔒 Closing browser...');
+        console.log('\n','🔒 Closing browser...');
         await driver.quit();
     });
 
@@ -116,7 +118,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('✅ Header assertion passed!');
+        console.log('\n','✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillAmount(100);
@@ -210,6 +212,7 @@
     *                   2. Verify that page opened successfully.
     *                   3. Write whitespace only description Field. 
     *                   4. Fill other field with these data required for the test:
+    *                        - Description: ""
     *                        - Amount: 100.
     *                        - Type: Income.
     *                        - Category: Salary.
@@ -229,7 +232,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('✅ Header assertion passed!');
+        console.log('\n','✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription(' ');
@@ -272,6 +275,7 @@
     *                   2. Verify that page opened successfully.
     *                   3. Write 1 character only description Field. 
     *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a"
     *                        - Amount: 100.
     *                        - Type: Income.
     *                        - Category: Salary.
@@ -290,7 +294,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('✅ Header assertion passed!');
+        console.log('\n','✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -336,7 +340,7 @@
         */
         // Step 7: Verify Last Transaction data.
         const lastTransaction = await transcationlist.getLastTransactionData();
-        //console.log('Last transaction data:', lastTransaction);
+        console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
         //expect(lastTransaction.amount).to.equal('$ 100');
         console.log('✅ Last transaction data assertion passed');
@@ -354,11 +358,12 @@
     *                   2. Verify that page opened successfully.
     *                   3. Write 100 characters only description Field. 
     *                   4. Fill other field with these data required for the test:
+    *                        - Description: "QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O4".
     *                        - Amount: 100.
     *                        - Type: Income.
     *                        - Category: Salary.
     *                   5. Click "Add Transaction".
-    *                   6. Verify Verify Last Transaction data.
+    *                   6. Verify Last Transaction data.
     *
     * Expected Result : Description Field will accept 100 characters.
     *******************************************************************************************************/
@@ -372,7 +377,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('✅ Header assertion passed!');
+        console.log('\n','✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O4');
@@ -391,11 +396,386 @@
     });
 
 
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-005
+    •⁠ ⁠Test Case : Exceeding characters limit at Description Field (Out of Boundries)
+    
+    •⁠ ⁠Description:  Test when user write 101 characters only at description field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Write 101 characters at description Field. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O41".   
+    *                        - Amount: 100.
+    *                        - Type: Income.
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be not update with these data.
+    *                   7. Verify description error massage.
+    *
+    * Expected Result : Description Field will reject 101 characters, and display error "Description must be less than 100 characters"
+    *******************************************************************************************************/
+    it('TC-005: Exceeding characters limit at Description Field (Out of Boundries)', async function ()
+    {
+        console.log('🔎 TC-005: Exceeding characters limit at Description Field (Out of Boundries)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n','✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O41');
+        await page.fillAmount(100);
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).not.equal('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O41');
+        console.log('✅ Last transaction data not updated with description out of boundries lenght assertion passed');
+
+        // Step 7: Verify description error massage.
+        const descriptionError = await driver.wait(until.elementLocated(By.id('descriptionError')), 5000).getText();
+        expect(descriptionError).to.equal('Description must be less than 100 characters');
+        console.log('✅ Description error massage displayed assertion passed:',descriptionError);
+    });    
+
 
 
 
     
     });
+
+
+
+
+/*============================================================================================================================================== *
+ *                                                   Test Suite for Amount Field                                                             *
+ *===============================================================================================================================================*/
+
+describe('Amount Field Test Suite', function () 
+{
+ let driver;
+ let page;
+ let overview;
+
+ beforeEach(async function () 
+ { 
+    console.log('\n','🟢 Step 1: beforeEach started');
+     
+     try {
+         console.log('🟢 Step 2: About to create driver...');
+         
+         driver = await createDriver();
+         
+         console.log('🟢 Step 3: Driver created successfully!');
+         
+         const htmlPath = path.join(__dirname, '..', '..', 'App', 'finance_tracker_app.html');
+         console.log('🟢 Step 4: HTML Path:', htmlPath);
+         
+         const fileUrl = 'file:///' + htmlPath.replace(/\\/g, '/');
+         console.log('🟢 Step 5: File URL:', fileUrl);
+         
+         await driver.get(fileUrl);
+         console.log('🟢 Step 6: Navigated to page');
+         
+         await driver.manage().window().maximize();
+         console.log('🟢 Step 7: Window maximized');
+         
+         page = new FinanceTrackerPage(driver);
+         overview = new FinancialOverview(driver);
+         transcationlist = new TransactionList(driver);
+         console.log('🟢 Step 8: Page object created\n');
+         
+     } 
+     catch (error)
+     {
+        console.log('\n','🔴 ERROR:', error.message);
+         throw error;
+     }
+     
+     
+ });
+
+ afterEach(async function () 
+ {
+    console.log('\n','🔒 Closing browser...');
+     await driver.quit();
+ });
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-006
+    •⁠ ⁠Test Case : Negative number at amount field (Out of Boundries)
+    
+    •⁠ ⁠Description:  Test when user write negative number at amount field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Write negative number at amount Field. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: -50.
+    *                        - Type: Income.
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be not update with these data.
+    *                   7. Verify description error massage.
+    *
+    * Expected Result : Amount Field will reject -50, and display error "Please enter a valid positive amount"
+    *******************************************************************************************************/
+    it('TC-006: Write Negative Number at amount field (Out of Boundries)', async function ()
+    {
+        console.log('🔎 TC-006: Write Negative Number at amount field (Out of Boundries)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n','✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(-50);
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).not.equal('a');
+        console.log('✅ Last transaction data not updated with description out of boundries lenght assertion passed');
+
+        // Step 7: Verify description error massage.
+        const amountError = await driver.wait(until.elementLocated(By.id('amountError')), 5000).getText();
+        expect(amountError).to.equal('Please enter a valid positive amount');
+        console.log('✅ Amount error massage displayed assertion passed:',amountError);
+
+    }); 
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-007
+    •⁠ ⁠Test Case : Minimum number at amount field (Min Amount)
+    
+    •⁠ ⁠Description:  Test when user write Minimum number at amount field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Write Minimum number at amount Field. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 0.01.
+    *                        - Type: Income.
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *
+    * Expected Result : Amount Field will accept 0.01.
+    *******************************************************************************************************/
+    it('TC-007: Write Minimum Number at amount field (Min Amount)', async function ()
+    {
+        console.log('🔎 TC-007: Write Minimum Number at amount field (Min Amount)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n','✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(0.01);
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.amount).to.equal('$ 0.01');
+        console.log('✅ Last transaction data assertion passed');
+
+    });     
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-008
+    •⁠ ⁠Test Case : Maximum number at amount field (Max Amount)
+    
+    •⁠ ⁠Description:  Test when user write Maximum number at amount field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Write Maximum number at amount Field. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 999,999.99
+    *                        - Type: Income.
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *
+    * Expected Result : Amount Field will accept 999,999.99
+    *******************************************************************************************************/
+    it('TC-008: Write Maximum Number at amount field (Max Amount)', async function ()
+    {
+        console.log('🔎 TC-008: Write Maximum Number at amount field (Max Amount)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n','✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(999999.99);
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.amount).to.equal('$ 999999.99');
+        console.log('✅ Last transaction data assertion passed');
+
+    }); 
+
+/* Bug found app accept 1,000,000.00 which it above of max value that should be allwoed */
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-009
+    •⁠ ⁠Test Case : Exceeding Maximum number at amount field (Out of Boundries)
+    
+    •⁠ ⁠Description:  Test when user try to exceeding Maximum number at amount field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Write Maximum number at amount Field. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 1,000,000.00
+    *                        - Type: Income.
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *
+    * Expected Result : Amount Field will reject 1,000,000.00 and display error "Amount seems too large"
+    *******************************************************************************************************/
+    it('TC-009: Try to Exceeding Maximum Number at amount field (Out of Boundries)', async function ()
+    {
+        console.log('🔎 TC-009: Try to Exceeding Maximum Number at amount field (Out of Boundries)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n','✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(1000000.00);
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.amount).not.equal('$ 1000000.00');
+        console.log('✅ Last transaction data assertion passed');
+
+        // Step 7: Verify description error massage.
+        const amountError = await driver.wait(until.elementLocated(By.id('amountError')), 5000).getText();
+        expect(amountError).to.equal('Amount seems too large');
+        console.log('✅ Amount error massage displayed assertion passed:',amountError);        
+    }); 
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-010
+    •⁠ ⁠Test Case : Three Decimal number at amount field.
+    
+    •⁠ ⁠Description:  Test when user try to write three decimal number at amount field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Write three decimal number at amount Field. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 5.001
+    *                        - Type: Income.
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *
+    * Expected Result : Amount Field will reject 5.001 and display error "Please enter a vaild value. The two nearest valid values are 5 and 5.01"
+    *******************************************************************************************************/
+    it('TC-010: Try to write three decimal Number at amount field (0.001)', async function ()
+    {
+        console.log('🔎 TC-010: Try to write three decimal Number at amount field (0.001)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n','✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(5.001);
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.amount).not.equal('$ 5.001');
+        console.log('✅ Last transaction data assertion passed');
+
+        // Step 7: Verify amount error massage.
+        const isValid = await driver.executeScript(`return document.getElementById('amount').validity.valid;`);
+        assert.equal(isValid, false, 'Please enter a vaild value. The two nearest valid values are 5 and 5.01');
+        console.log('✅ Amount field is invalid when try to write three decimal (0.001) assertion passed');    
+    });     
+
+
+
+
+
+});
+
+
+
+
+
+
 
 
 // ============================================

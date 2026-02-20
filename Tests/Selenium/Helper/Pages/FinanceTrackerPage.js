@@ -22,7 +22,7 @@ class FinanceTrackerPage {
         let description = await this.browserdriver.wait(until.elementLocated(By.id('description')), 5000);
         await description.clear();
         await description.sendKeys(descriptionText);
-        console.log('Description filled with: ' + descriptionText);
+        console.log('🖊 Description filled with: ' + descriptionText);
     }
 
     /***************************
@@ -33,7 +33,7 @@ class FinanceTrackerPage {
         let amount = await this.browserdriver.wait(until.elementLocated(By.id('amount')), 5000);
         await amount.clear();
         await amount.sendKeys(amountValue);
-        console.log('Amount filled with: $' + amountValue);
+        console.log('💵 Amount filled with: $' + amountValue);
     }
 
 
@@ -92,6 +92,7 @@ class FinanceTrackerPage {
     {
         await this.browserdriver.findElement(By.id('date')).sendKeys(date);
         await this.browserdriver.findElement(By.id('date')).click();
+        console.log('📅 Date filled with: ', date);
     }
 
 
@@ -103,7 +104,7 @@ class FinanceTrackerPage {
         let notes = await this.browserdriver.wait(until.elementLocated(By.id('notes')), 5000);
         await notes.clear();
         await notes.sendKeys(notesText);
-        console.log('Notes filled with: ' + notesText);
+        console.log('📝 Notes filled with: ' + notesText);
     }
 
 
@@ -114,7 +115,7 @@ class FinanceTrackerPage {
     {
         let addBtn = await this.browserdriver.wait(until.elementLocated(By.id('submitBtn')), 5000);
         await addBtn.click();
-        console.log('Transaction add button clicked');
+        console.log('🔳 Transaction add button clicked');
         
         // Wait for the loading state to finish
         // The app shows "Adding..." text during submission
@@ -124,7 +125,7 @@ class FinanceTrackerPage {
             return btnText === 'Add Transaction';         // Wait until it's back to normal "'Add Transaction"
         }, 5000);
     
-        console.log('Transaction processing complete');        
+        console.log('🔳 Transaction processing complete\n');       
     }
 
 }
@@ -215,6 +216,7 @@ class TransactionList
 
     async getLastTransactionData()
     {
+        console.log('Newest Transaction List Data:');
         // Step 1: Get all transactions
         const item = await this.browserdriver.findElements(By.className('transaction-item'));
         
@@ -247,12 +249,12 @@ class TransactionList
         try
         {
             note = await lastItem.findElement(By.css('.transaction-info em')).getText();
-            console.log('Note:', note);            
+            console.log('Note:', note, '\n');            
         }
         catch
         {
             note = 'No notes found';
-            console.log(note);
+            console.log(note,'\n');
         }
 
         // return data in object.
