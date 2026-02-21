@@ -1311,26 +1311,26 @@ describe('Amount Field Test Suite', function ()
 
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-017
-    •⁠ ⁠Test Case : Date Field.
+    •⁠ ⁠Test Case : Transaction with past date.
     *
-    •⁠ ⁠Description:  Test when user select category that include Special char (&) and click on add transaction button.
+    •⁠ ⁠Description:  Test when user select an old date and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
-    *                   3. Select category option with Special char (&). 
+    *                   3. Select an old date. 
     *                   4. Fill other field with these data required for the test:
     *                        - Description: "a".   
     *                        - Amount: 100.
     *                        - Type: "income".
     *                        - Category: "Bills & Utilities".
-    *                        - Date:
+    *                        - Date: "2024-01-15"
     *                   5. Click "Add Transaction".
     *                   6. Verify Last Transaction data should be updated with these data.
     *
-    * Expected Result : Transaction data should be updated with category "Bills & Utilities"
+    * Expected Result : Transaction data should be updated with date 
     *******************************************************************************************************/
-    it('TC-017: Category Field Special char (&)', async function ()
+    it('TC-017: Date Field: Test when user select an old date', async function ()
     {
-        console.log('🔎 TC-017: Category Field Special char (&)');
+        console.log('🔎 TC-017: Date Field: Test when user select an old date');
         // Step 1: Verify that page opened successfully.
         const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
         const HeaderPageText = await HeaderPage.getText();
@@ -1345,6 +1345,7 @@ describe('Amount Field Test Suite', function ()
         await page.fillAmount(100);
         await page.selectType('income'); 
         await page.selectCategory('Bills & Utilities');
+        await page.selectDate('2024-01-15');
 
         // Step 5: Cilck on add transaction button.
         await page.addTransaction();
@@ -1352,12 +1353,8 @@ describe('Amount Field Test Suite', function ()
         // Step 6: Verify Last Transaction data not updated with these data.
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
-        expect(lastTransaction.description).to.equal('a');
-        expect(lastTransaction.amount).to.equal('$ 100');
-        expect(lastTransaction.type.toLowerCase()).to.equal('Income'.toLowerCase());
-        expect(lastTransaction.categoryDisplay.toLowerCase()).to.equal('Bills & Utilities'.toLowerCase());
-        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('bills'.toLowerCase());
-        console.log('✅ Last transaction data updated with category "Bills & Utilities" assertion passed');
+        expect(lastTransaction.date).to.equal('2024-01-15');
+        console.log('✅ Last transaction data updated with an old date, assertion passed');
 
     }); 
 
