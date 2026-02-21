@@ -47,7 +47,7 @@
 
     beforeEach(async function () 
     {
-        console.log('\n','🟢 Step 1: beforeEach started');
+        console.log('\n🟢 Step 1: beforeEach started');
         
         try {
             console.log('🟢 Step 2: About to create driver...');
@@ -76,7 +76,7 @@
         } catch (error)
         {
             console.log('');
-            console.log('\n','🔴 ERROR:', error.message);
+            console.log('\n🔴 ERROR:', error.message);
             throw error;
         }
         
@@ -85,7 +85,7 @@
 
     afterEach(async function () 
     {
-        console.log('\n','🔒 Closing browser...');
+        console.log('\n🔒 Closing browser...');
         await driver.quit();
     });
 
@@ -93,7 +93,7 @@
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-001
     •⁠ ⁠Test Case : Empty Description Field
-    
+    *
     •⁠ ⁠Description:  Test when user forget to add description and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -118,7 +118,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillAmount(100);
@@ -206,7 +206,7 @@
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-002
     •⁠ ⁠Test Case : whitespace only at Description Field
-    
+    *
     •⁠ ⁠Description:  Test when user write whitespace only at description field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -232,7 +232,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription(' ');
@@ -269,7 +269,7 @@
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-003
     •⁠ ⁠Test Case : 1 character at Description Field (Min Lenght)
-    
+    *
     •⁠ ⁠Description:  Test when user write 1 character only at description field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -294,7 +294,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -352,7 +352,7 @@
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-004
     •⁠ ⁠Test Case : 100 characters at Description Field (Max Lenght)
-    
+    *
     •⁠ ⁠Description:  Test when user write 100 characters only at description field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -377,7 +377,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O4');
@@ -399,7 +399,7 @@
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-005
     •⁠ ⁠Test Case : Exceeding characters limit at Description Field (Out of Boundries)
-    
+    *
     •⁠ ⁠Description:  Test when user write 101 characters only at description field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -425,7 +425,7 @@
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O41');
@@ -469,7 +469,7 @@ describe('Amount Field Test Suite', function ()
 
  beforeEach(async function () 
  { 
-    console.log('\n','🟢 Step 1: beforeEach started');
+    console.log('\n🟢 Step 1: beforeEach started');
      
      try {
          console.log('🟢 Step 2: About to create driver...');
@@ -498,7 +498,7 @@ describe('Amount Field Test Suite', function ()
      } 
      catch (error)
      {
-        console.log('\n','🔴 ERROR:', error.message);
+        console.log('\n🔴 ERROR:', error.message);
          throw error;
      }
      
@@ -507,7 +507,7 @@ describe('Amount Field Test Suite', function ()
 
  afterEach(async function () 
  {
-    console.log('\n','🔒 Closing browser...');
+    console.log('\n🔒 Closing browser...');
      await driver.quit();
  });
 
@@ -515,7 +515,7 @@ describe('Amount Field Test Suite', function ()
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-006
     •⁠ ⁠Test Case : Negative number at amount field (Out of Boundries)
-    
+    *
     •⁠ ⁠Description:  Test when user write negative number at amount field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -541,7 +541,7 @@ describe('Amount Field Test Suite', function ()
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -569,7 +569,7 @@ describe('Amount Field Test Suite', function ()
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-007
     •⁠ ⁠Test Case : Minimum number at amount field (Min Amount)
-    
+    *
     •⁠ ⁠Description:  Test when user write Minimum number at amount field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -594,7 +594,7 @@ describe('Amount Field Test Suite', function ()
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -617,7 +617,7 @@ describe('Amount Field Test Suite', function ()
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-008
     •⁠ ⁠Test Case : Maximum number at amount field (Max Amount)
-    
+    *
     •⁠ ⁠Description:  Test when user write Maximum number at amount field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -642,7 +642,7 @@ describe('Amount Field Test Suite', function ()
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -665,7 +665,7 @@ describe('Amount Field Test Suite', function ()
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-009
     •⁠ ⁠Test Case : Exceeding Maximum number at amount field (Out of Boundries)
-    
+    *
     •⁠ ⁠Description:  Test when user try to exceeding Maximum number at amount field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -690,7 +690,7 @@ describe('Amount Field Test Suite', function ()
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -705,7 +705,7 @@ describe('Amount Field Test Suite', function ()
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.amount).not.equal('$ 1000000.00');
-        console.log('✅ Last transaction data assertion passed');
+        console.log('✅ Last transaction data assertion passed and not be updated');
 
         // Step 7: Verify description error massage.
         const amountError = await driver.wait(until.elementLocated(By.id('amountError')), 5000).getText();
@@ -717,7 +717,7 @@ describe('Amount Field Test Suite', function ()
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-010
     •⁠ ⁠Test Case : Three Decimal number at amount field.
-    
+    *
     •⁠ ⁠Description:  Test when user try to write three decimal number at amount field and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
@@ -742,7 +742,7 @@ describe('Amount Field Test Suite', function ()
         // Step 2: Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
+        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -757,7 +757,7 @@ describe('Amount Field Test Suite', function ()
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.amount).not.equal('$ 5.001');
-        console.log('✅ Last transaction data assertion passed');
+        console.log('✅ Last transaction data assertion passed and not be updated');
 
         // Step 7: Verify amount error massage.
         const isValid = await driver.executeScript(`return document.getElementById('amount').validity.valid;`);
@@ -766,12 +766,447 @@ describe('Amount Field Test Suite', function ()
     });     
 
 
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-011
+    •⁠ ⁠Test Case : Empty amount field.
+    *
+    •⁠ ⁠Description:  Test when user forget to write number at amount field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Leave amount field empty. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: "".
+    *                        - Type: Income.
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should NOT be updated with these data.
+    *
+    * Expected Result : Amount Field will should display error "Please fill out this field."
+    *******************************************************************************************************/
+    it('TC-011: Test when user forget to write number at amount field', async function ()
+    {
+        console.log('🔎 TC-011: Test when user forget to write number at amount field');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).not.equal('a');
+        console.log('✅ Last transaction data assertion passed and not be updated');
+
+        // Step 7: Verify amount error massage.
+        const isValid = await driver.executeScript(`return document.getElementById('amount').validity.valid;`);
+        assert.equal(isValid, false, 'Please fill out this field.');
+        console.log('✅ Amount field is invalid when when user forget to write a number, assertion passed');    
+    });        
+
 
 
 
 });
 
 
+
+/*============================================================================================================================================== *
+ *                                                   Test Suite for Type Field                                                             *
+ *===============================================================================================================================================*/
+
+describe('Amount Field Test Suite', function () 
+{
+ let driver;
+ let page;
+ let overview;
+
+ beforeEach(async function () 
+ { 
+    console.log('\n🟢 Step 1: beforeEach started');
+     
+     try {
+         console.log('🟢 Step 2: About to create driver...');
+         
+         driver = await createDriver();
+         
+         console.log('🟢 Step 3: Driver created successfully!');
+         
+         const htmlPath = path.join(__dirname, '..', '..', 'App', 'finance_tracker_app.html');
+         console.log('🟢 Step 4: HTML Path:', htmlPath);
+         
+         const fileUrl = 'file:///' + htmlPath.replace(/\\/g, '/');
+         console.log('🟢 Step 5: File URL:', fileUrl);
+         
+         await driver.get(fileUrl);
+         console.log('🟢 Step 6: Navigated to page');
+         
+         await driver.manage().window().maximize();
+         console.log('🟢 Step 7: Window maximized');
+         
+         page = new FinanceTrackerPage(driver);
+         overview = new FinancialOverview(driver);
+         transcationlist = new TransactionList(driver);
+         console.log('🟢 Step 8: Page object created\n');
+         
+     } 
+     catch (error)
+     {
+        console.log('\n🔴 ERROR:', error.message);
+         throw error;
+     }
+     
+     
+ });
+
+ afterEach(async function () 
+ {
+    console.log('\n🔒 Closing browser...');
+     await driver.quit();
+ });
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-012
+    •⁠ ⁠Test Case : Empty Type.
+    *
+    •⁠ ⁠Description:  Test when user forget to select type at type field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Dont select any type leave it empty. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "".
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should NOT be updated with these data.
+    *
+    * Expected Result : Type Field should display error "Please select an item in the list"
+    *******************************************************************************************************/
+    it('TC-012: Empty Type Field', async function ()
+    {
+        console.log('🔎 TC-012: Empty Type Field');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n','✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectCategory('Salary');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).not.equal('a');
+        console.log('✅ Last transaction data assertion passed and not be updated');
+
+        // Step 7: Verify amount error massage.
+        const isValid = await driver.executeScript(`return document.getElementById('type').validity.valid;`);
+        assert.equal(isValid, false, 'Please select an item in the list');
+        console.log('✅ Type field is invalid when user forget to select whether income or expenses type, assertion passed');    
+    });    
+
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-013
+    •⁠ ⁠Test Case : Income Type.
+    *
+    •⁠ ⁠Description:  Test when select income type at type field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Select income type. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "income".
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *                   7. Verify Balance amount changed.
+    *                   8. Verify Income amount changed.
+    *
+    * Expected Result : Transaction data should be updated, balance and income increased.
+    *******************************************************************************************************/
+    it('TC-013: Income Type Field', async function ()
+    {
+        console.log('🔎 TC-013: Income Type Field');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('income');
+        await page.selectCategory('Salary');
+
+
+        // Store balance and total income amount before cilck on add transaction button.
+        let balanceBefore = await overview.getBalance();
+        let incomeBefore = await overview.getIncome();
+        console.log('\nBalance amount before submmit= $',balanceBefore);
+        console.log('Total income before submmit= $',incomeBefore, '\n');       
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('a');
+        expect(lastTransaction.amount).to.equal('$ 100');
+        expect(lastTransaction.type.toLowerCase()).to.equal('Income'.toLowerCase());
+        expect(lastTransaction.category.toLowerCase()).to.equal('Salary'.toLowerCase());
+        console.log('✅ Last transaction data updated assertion passed');
+
+        // Step 7: Verify Balance amount changed.
+        let balanceAfter = await overview.getBalance();
+        console.log('Balance amount before submmit= $',balanceBefore);
+        console.log('Balance amount after submmit= $',balanceAfter);
+        expect(balanceAfter - balanceBefore).to.equal(100);
+       //expect(balanceAfter).to.be.greaterThan(balanceBefore);
+        console.log('✅ Balance increase changed assertion passed');
+
+        // Step 8: Verify Total Income amount changed.
+        let incomeAfter = await overview.getIncome();
+        console.log('Total income before submmit= $',incomeBefore);
+        console.log('Total income after submmit= $',incomeAfter);
+        expect(incomeAfter - incomeBefore).to.equal(100);
+       //expect(balanceAfter).to.be.greaterThan(balanceBefore);
+        console.log('✅ Total income increase changed assertion passed');  
+    });     
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-014
+    •⁠ ⁠Test Case : Expense Type.
+    *
+    •⁠ ⁠Description:  Test when select expense type at type field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Select expense type. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: Salary.
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *                   7. Verify Balance amount changed.
+    *                   8. Verify expenses amount changed.
+    *
+    * Expected Result : Transaction data should be updated, balance decreased and expense increased.
+    *******************************************************************************************************/
+    it('TC-014: Expense Type Field', async function ()
+    {
+        console.log('🔎 TC-014: Expense Type Field');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense');
+        await page.selectCategory('Salary');
+
+
+        // Store balance and total income amount before cilck on add transaction button.
+        let balanceBefore = await overview.getBalance();
+        let expensesBefore = await overview.getExpenses();
+        console.log('\nBalance amount before submmit= $',balanceBefore);
+        console.log('Total income before submmit= $',expensesBefore, '\n');       
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('a');
+        expect(lastTransaction.amount).to.equal('$ -100');
+        expect(lastTransaction.type.toLowerCase()).to.equal('expense'.toLowerCase());
+        expect(lastTransaction.category.toLowerCase()).to.equal('Salary'.toLowerCase());
+        console.log('✅ Last transaction data updated assertion passed');
+
+        // Step 7: Verify Balance amount changed.
+        let balanceAfter = await overview.getBalance();
+        console.log('Balance amount before submmit= $',balanceBefore);
+        console.log('Balance amount after submmit= $',balanceAfter);
+        expect(balanceBefore - balanceAfter).to.equal(100);
+       //expect(balanceAfter).to.be.greaterThan(balanceBefore);
+        console.log('✅ Balance decrease changed assertion passed');
+
+        // Step 8: Verify Total Income amount changed.
+        let expensesAfter = await overview.getExpenses();
+        console.log('Total income before submmit= $',expensesBefore);
+        console.log('Total income after submmit= $',expensesAfter);
+        expect(expensesAfter - expensesBefore).to.equal(100);
+       //expect(balanceAfter).to.be.greaterThan(balanceBefore);
+        console.log('✅ Total expense increase changed assertion passed');  
+    });  
+
+
+
+
+
+
+
+});
+
+
+
+
+/*============================================================================================================================================== *
+ *                                                   Test Suite for Category Field                                                             *
+ *===============================================================================================================================================*/
+
+describe('Amount Field Test Suite', function () 
+{
+ let driver;
+ let page;
+ let overview;
+
+ beforeEach(async function () 
+ { 
+    console.log('\n🟢 Step 1: beforeEach started');
+     
+     try {
+         console.log('🟢 Step 2: About to create driver...');
+         
+         driver = await createDriver();
+         
+         console.log('🟢 Step 3: Driver created successfully!');
+         
+         const htmlPath = path.join(__dirname, '..', '..', 'App', 'finance_tracker_app.html');
+         console.log('🟢 Step 4: HTML Path:', htmlPath);
+         
+         const fileUrl = 'file:///' + htmlPath.replace(/\\/g, '/');
+         console.log('🟢 Step 5: File URL:', fileUrl);
+         
+         await driver.get(fileUrl);
+         console.log('🟢 Step 6: Navigated to page');
+         
+         await driver.manage().window().maximize();
+         console.log('🟢 Step 7: Window maximized');
+         
+         page = new FinanceTrackerPage(driver);
+         overview = new FinancialOverview(driver);
+         transcationlist = new TransactionList(driver);
+         console.log('🟢 Step 8: Page object created\n');
+         
+     } 
+     catch (error)
+     {
+        console.log('\n🔴 ERROR:', error.message);
+         throw error;
+     }
+     
+     
+ });
+
+ afterEach(async function () 
+ {
+    console.log('\n🔒 Closing browser...');
+     await driver.quit();
+ });
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-015
+    •⁠ ⁠Test Case : Category Field Type.
+    *
+    •⁠ ⁠Description:  Test when select category type at category field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Select category type. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "income".
+    *                        - Category: .
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *
+    * Expected Result : Transaction data should be updated with category that selected.
+    *******************************************************************************************************/
+    it('TC-015: Category Type Field', async function ()
+    {
+        console.log('🔎 TC-014: Category Type Field');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('income');
+        await page.selectCategory('');     
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('a');
+        expect(lastTransaction.amount).to.equal('$ 100');
+        expect(lastTransaction.type.toLowerCase()).to.equal('Income'.toLowerCase());
+        expect(lastTransaction.category.toLowerCase()).to.equal('Salary'.toLowerCase());
+        console.log('✅ Last transaction data updated assertion passed');
+
+    });  
+
+
+
+
+
+
+
+
+
+});
 
 
 

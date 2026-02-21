@@ -148,7 +148,7 @@ class FinancialOverview {
     async getBalanceString() {
         let balanceElement = await this.browserdriver.wait(until.elementLocated(By.id('balance')), 5000);
         let balance = await balanceElement.getText();
-        console.log('Currently the Balance=', balance);
+        console.log('\nCurrently the Balance=', balance);
         return balance;
     }
 
@@ -157,7 +157,7 @@ class FinancialOverview {
         let balanceString = await balanceElement.getText();
         let balanceNumber = Number(balanceString.replace(/[$,]/g, '')); // Remove $ and , if exist and convert it to number ($12,447.50)
         // parseFloat(balanceString.replace('$', '')); 
-        console.log('Currently the Balance=', balanceString);
+        console.log('\nCurrently the Balance=', balanceString);
         return balanceNumber;
     }
 
@@ -168,7 +168,7 @@ class FinancialOverview {
     async getIncomeString() {
         let incomeElement = await this.browserdriver.wait(until.elementLocated(By.id('totalIncome')), 5000);
         let income = await incomeElement.getText();
-        console.log('Currently the Total Income=', income);
+        console.log('\nCurrently the Total Income=', income);
         return income;
     }
 
@@ -176,7 +176,7 @@ class FinancialOverview {
         let incomeElement = await this.browserdriver.wait(until.elementLocated(By.id('totalIncome')), 5000);
         let incomeString = await incomeElement.getText();
         let incomeNumber = Number(incomeString.replace(/[$,]/g, ''));
-        console.log('Currently the Total Income=', incomeString);
+        console.log('\nCurrently the Total Income=', incomeString);
         return incomeNumber;
     }
 
@@ -187,7 +187,7 @@ class FinancialOverview {
     async getExpensesString() {
         let expensesElement = await this.browserdriver.wait(until.elementLocated(By.id('totalExpenses')), 5000);
         let expenses = await expensesElement.getText();
-        console.log('Currently the Total Expenses=', expenses);
+        console.log('\nCurrently the Total Expenses=', expenses);
         return expenses;
     }
 
@@ -195,7 +195,7 @@ class FinancialOverview {
         let expensesElement = await this.browserdriver.wait(until.elementLocated(By.id('totalExpenses')), 5000);
         let expensesString = await expensesElement.getText();
         let expensesNumber = Number(expensesString.replace(/[$,]/g, ''));
-        console.log('Currently the Total Expenses=', expensesString);
+        console.log('\nCurrently the Total Expenses=', expensesString);
         return expensesNumber;
     }
 }
@@ -220,14 +220,37 @@ class TransactionList
         // Step 1: Get all transactions
         const item = await this.browserdriver.findElements(By.className('transaction-item'));
         
+
         // Step 2: Return the last transaction (newest transaction)
         const lastItem = await item[0];
+
 
         // Step 3: Get the description of last transaction.
         const description = await lastItem.findElement(By.css('h4')).getText();
         console.log('Description:', description);
 
-        // Step 4: Get the category and date of last transaction.
+
+        // Step 4: Get the amount of last transaction.
+        const amountString = await lastItem.findElement(By.className('transaction-amount')).getText();
+        let amount = Number(amountString.replace(/[$,]/g, ''));
+        console.log('Amount: $', amount);
+
+
+        // Step 5: Get the type of last transaction.
+        const typeElement = await lastItem.findElement(By.className('transaction-amount')).getAttribute('class');;
+        let type = '';
+        if (typeElement.includes('income'))
+        {
+            type = 'income';
+        } 
+        else if (typeElement.includes('expense'))
+        {
+            type = 'expense';
+        }
+        console.log('Type selected: ' + type);
+
+
+        // Step 6: Get the category and date of last transaction.
         const categoryDateText = await lastItem.findElement(By.css('.transaction-info p')).getText(); // categoryDateText = "salary • 2026-02-16"
         const parts = categoryDateText.split('•'); // parts = ["salary", "2026-02-16"]
 
@@ -237,12 +260,8 @@ class TransactionList
         const date = parts[1].trim();      // date = "2026-02-16"
         console.log('Date:', date);
 
-        // Step 5: Get the amount of last transaction.
-        const amountString = await lastItem.findElement(By.className('transaction-amount')).getText();
-        let amount = Number(amountString.replace(/[$,]/g, ''));
-        console.log('Amount: $', amount);
 
-        // Step 6: Get the note of last transaction.
+        // Step 7: Get the note of last transaction.
         let note ='';
 
         // Will check if note is found or not.
@@ -253,12 +272,12 @@ class TransactionList
         }
         catch
         {
-            note = 'No notes found';
+            note = 'Note: No notes found';
             console.log(note,'\n');
         }
 
         // return data in object.
-        return {description, category, date, amount: '$ ' + amount, note};
+        return {description, amount: '$ ' + amount, type , category, date,  note};
     }
 }
 
