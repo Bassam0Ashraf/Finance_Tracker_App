@@ -986,7 +986,7 @@ describe('Amount Field Test Suite', function ()
         expect(lastTransaction.description).to.equal('a');
         expect(lastTransaction.amount).to.equal('$ 100');
         expect(lastTransaction.type.toLowerCase()).to.equal('Income'.toLowerCase());
-        expect(lastTransaction.category.toLowerCase()).to.equal('Salary'.toLowerCase());
+        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('Salary'.toLowerCase());
         console.log('✅ Last transaction data updated assertion passed');
 
         // Step 7: Verify Balance amount changed.
@@ -1061,7 +1061,7 @@ describe('Amount Field Test Suite', function ()
         expect(lastTransaction.description).to.equal('a');
         expect(lastTransaction.amount).to.equal('$ -100');
         expect(lastTransaction.type.toLowerCase()).to.equal('expense'.toLowerCase());
-        expect(lastTransaction.category.toLowerCase()).to.equal('Salary'.toLowerCase());
+        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('Salary'.toLowerCase());
         console.log('✅ Last transaction data updated assertion passed');
 
         // Step 7: Verify Balance amount changed.
@@ -1150,12 +1150,12 @@ describe('Amount Field Test Suite', function ()
 
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-015
-    •⁠ ⁠Test Case : Category Field Type.
+    •⁠ ⁠Test Case : Category Field empty.
     *
-    •⁠ ⁠Description:  Test when select category type at category field and click on add transaction button.
+    •⁠ ⁠Description:  Test when user leave category field empty and click on add transaction button.
     •⁠ ⁠Test Procedure :  1. Navigate to page's App.
     *                   2. Verify that page opened successfully.
-    *                   3. Select category type. 
+    *                   3. Leave category field empty. 
     *                   4. Fill other field with these data required for the test:
     *                        - Description: "a".   
     *                        - Amount: 100.
@@ -1164,11 +1164,11 @@ describe('Amount Field Test Suite', function ()
     *                   5. Click "Add Transaction".
     *                   6. Verify Last Transaction data should be updated with these data.
     *
-    * Expected Result : Transaction data should be updated with category that selected.
+    * Expected Result : Transaction data should be updated with category "No category"
     *******************************************************************************************************/
-    it('TC-015: Category Type Field', async function ()
+    it('TC-015: Category Field Empty', async function ()
     {
-        console.log('🔎 TC-014: Category Type Field');
+        console.log('🔎 TC-014: Category Field Empty');
         // Step 1: Verify that page opened successfully.
         const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
         const HeaderPageText = await HeaderPage.getText();
@@ -1181,8 +1181,7 @@ describe('Amount Field Test Suite', function ()
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
-        await page.selectType('income');
-        await page.selectCategory('');     
+        await page.selectType('income');  
 
         // Step 5: Cilck on add transaction button.
         await page.addTransaction();
@@ -1193,10 +1192,177 @@ describe('Amount Field Test Suite', function ()
         expect(lastTransaction.description).to.equal('a');
         expect(lastTransaction.amount).to.equal('$ 100');
         expect(lastTransaction.type.toLowerCase()).to.equal('Income'.toLowerCase());
-        expect(lastTransaction.category.toLowerCase()).to.equal('Salary'.toLowerCase());
-        console.log('✅ Last transaction data updated assertion passed');
+        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('No category'.toLowerCase());
+        console.log('✅ Last transaction data updated with category "No category" assertion passed');
 
     });  
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-016
+    •⁠ ⁠Test Case : Category Field Special char (&).
+    *
+    •⁠ ⁠Description:  Test when user select category that include Special char (&) and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Select category option with Special char (&). 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "income".
+    *                        - Category: "Bills & Utilities".
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *
+    * Expected Result : Transaction data should be updated with category "Bills & Utilities"
+    *******************************************************************************************************/
+    it('TC-016: Category Field Special char (&)', async function ()
+    {
+        console.log('🔎 TC-016: Category Field Special char (&)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('income'); 
+        await page.selectCategory('Bills & Utilities');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('a');
+        expect(lastTransaction.amount).to.equal('$ 100');
+        expect(lastTransaction.type.toLowerCase()).to.equal('Income'.toLowerCase());
+        expect(lastTransaction.categoryDisplay.toLowerCase()).to.equal('Bills & Utilities'.toLowerCase());
+        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('bills'.toLowerCase());
+        console.log('✅ Last transaction data updated with category "Bills & Utilities" assertion passed');
+
+    });  
+
+
+});
+
+
+
+/*============================================================================================================================================== *
+ *                                                   Test Suite for Date Field                                                             *
+ *===============================================================================================================================================*/
+
+describe('Amount Field Test Suite', function () 
+{
+ let driver;
+ let page;
+ let overview;
+
+ beforeEach(async function () 
+ { 
+    console.log('\n🟢 Step 1: beforeEach started');
+     
+     try {
+         console.log('🟢 Step 2: About to create driver...');
+         
+         driver = await createDriver();
+         
+         console.log('🟢 Step 3: Driver created successfully!');
+         
+         const htmlPath = path.join(__dirname, '..', '..', 'App', 'finance_tracker_app.html');
+         console.log('🟢 Step 4: HTML Path:', htmlPath);
+         
+         const fileUrl = 'file:///' + htmlPath.replace(/\\/g, '/');
+         console.log('🟢 Step 5: File URL:', fileUrl);
+         
+         await driver.get(fileUrl);
+         console.log('🟢 Step 6: Navigated to page');
+         
+         await driver.manage().window().maximize();
+         console.log('🟢 Step 7: Window maximized');
+         
+         page = new FinanceTrackerPage(driver);
+         overview = new FinancialOverview(driver);
+         transcationlist = new TransactionList(driver);
+         console.log('🟢 Step 8: Page object created\n');
+         
+     } 
+     catch (error)
+     {
+        console.log('\n🔴 ERROR:', error.message);
+         throw error;
+     }
+     
+     
+ });
+
+ afterEach(async function () 
+ {
+    console.log('\n🔒 Closing browser...');
+     await driver.quit();
+ });
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-017
+    •⁠ ⁠Test Case : Date Field.
+    *
+    •⁠ ⁠Description:  Test when user select category that include Special char (&) and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Select category option with Special char (&). 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "income".
+    *                        - Category: "Bills & Utilities".
+    *                        - Date:
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with these data.
+    *
+    * Expected Result : Transaction data should be updated with category "Bills & Utilities"
+    *******************************************************************************************************/
+    it('TC-017: Category Field Special char (&)', async function ()
+    {
+        console.log('🔎 TC-017: Category Field Special char (&)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('income'); 
+        await page.selectCategory('Bills & Utilities');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with these data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('a');
+        expect(lastTransaction.amount).to.equal('$ 100');
+        expect(lastTransaction.type.toLowerCase()).to.equal('Income'.toLowerCase());
+        expect(lastTransaction.categoryDisplay.toLowerCase()).to.equal('Bills & Utilities'.toLowerCase());
+        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('bills'.toLowerCase());
+        console.log('✅ Last transaction data updated with category "Bills & Utilities" assertion passed');
+
+    }); 
+
+
+
 
 
 
@@ -1207,6 +1373,12 @@ describe('Amount Field Test Suite', function ()
 
 
 });
+
+
+
+
+
+
 
 
 

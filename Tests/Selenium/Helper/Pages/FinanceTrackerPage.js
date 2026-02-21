@@ -254,8 +254,27 @@ class TransactionList
         const categoryDateText = await lastItem.findElement(By.css('.transaction-info p')).getText(); // categoryDateText = "salary • 2026-02-16"
         const parts = categoryDateText.split('•'); // parts = ["salary", "2026-02-16"]
 
-        const category = parts[0].trim();  // category = "salary"
-        console.log('Category:', category);
+        const categoryValue  = parts[0].trim();  // category = "salary"
+        console.log('Category Value :', categoryValue );
+
+        // Map internal value to display text
+        const categoryMap = 
+        {
+            'food': 'Food & Dining',
+            'transport': 'Transportation',
+            'shopping': 'Shopping',
+            'entertainment': 'Entertainment',
+            'bills': 'Bills & Utilities',
+            'healthcare': 'Healthcare',
+            'salary': 'Salary',
+            'freelance': 'Freelance',
+            'investment': 'Investment',
+            'other': 'Other'
+        };
+    
+        const categoryDisplay = categoryMap[categoryValue] || categoryValue;
+        console.log('Category display:', categoryDisplay);
+
 
         const date = parts[1].trim();      // date = "2026-02-16"
         console.log('Date:', date);
@@ -272,12 +291,12 @@ class TransactionList
         }
         catch
         {
-            note = 'Note: No notes found';
-            console.log(note,'\n');
+            note = 'No notes found';
+            console.log('Note:',note,'\n');
         }
 
         // return data in object.
-        return {description, amount: '$ ' + amount, type , category, date,  note};
+        return {description, amount: '$ ' + amount, type , categoryDisplay, categoryValue , date,  note};
     }
 }
 
