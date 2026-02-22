@@ -90,9 +90,7 @@ class FinanceTrackerPage {
     ***************************/
     async selectDate(date)
     {
-        const dateField = await this.browserdriver.findElement(By.id('date'));
-        await dateField.clear();
-        await dateField.sendKeys(date);
+        await this.browserdriver.executeScript(`document.getElementById('date').value = arguments[0];`,date);
         console.log('📅 Date filled with: ', date);
     }
 

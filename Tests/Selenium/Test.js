@@ -980,7 +980,7 @@ describe('Amount Field Test Suite', function ()
         // Step 5: Cilck on add transaction button.
         await page.addTransaction();
 
-        // Step 6: Verify Last Transaction data not updated with these data.
+        // Step 6: Verify Last Transaction data updated with these data.
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
@@ -1055,7 +1055,7 @@ describe('Amount Field Test Suite', function ()
         // Step 5: Cilck on add transaction button.
         await page.addTransaction();
 
-        // Step 6: Verify Last Transaction data not updated with these data.
+        // Step 6: Verify Last Transaction data updated with these data.
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
@@ -1186,7 +1186,7 @@ describe('Amount Field Test Suite', function ()
         // Step 5: Cilck on add transaction button.
         await page.addTransaction();
 
-        // Step 6: Verify Last Transaction data not updated with these data.
+        // Step 6: Verify Last Transaction data updated with these data.
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
@@ -1237,7 +1237,7 @@ describe('Amount Field Test Suite', function ()
         // Step 5: Cilck on add transaction button.
         await page.addTransaction();
 
-        // Step 6: Verify Last Transaction data not updated with these data.
+        // Step 6: Verify Last Transaction data updated with these data.
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
@@ -1340,6 +1340,8 @@ describe('Amount Field Test Suite', function ()
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
         console.log('\n✅ Header assertion passed!\n');
 
+        //const today = new Date().toISOString().split('T')[0];
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -1350,7 +1352,7 @@ describe('Amount Field Test Suite', function ()
         // Step 5: Cilck on add transaction button.
         await page.addTransaction();
 
-        // Step 6: Verify Last Transaction data not updated with these data.
+        // Step 6: Verify Last Transaction data updated with these data.
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.date).to.equal('2024-01-15');
@@ -1359,7 +1361,431 @@ describe('Amount Field Test Suite', function ()
     }); 
 
 
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-018
+    •⁠ ⁠Test Case : Use default date (today).
+    *
+    •⁠ ⁠Description:  Test when user use default date and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. Dont select any date. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "shopping".
+    *                        - Date: "default date (today)"
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with default date (today).
+    *
+    * Expected Result : Transaction data should be updated with default date (today).
+    *******************************************************************************************************/
+    it('TC-018: Date Field: Test when user use default date (today)', async function ()
+    {
+        console.log('🔎 TC-018: Date Field: Test when user use default date (today)');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
 
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('shopping');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data updated with default date (today).
+        const today = new Date().toISOString().split('T')[0];
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.date).to.equal(today);
+        console.log('✅ Last transaction data updated with default date (today), assertion passed');
+
+    }); 
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-019
+    •⁠ ⁠Test Case : Minimum Boundary of Date.
+    *
+    •⁠ ⁠Description:  Test when user use minimum boundary date and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. select minimum boundary date "1900-01-01". 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "shopping".
+    *                        - Date: "1900-01-01"
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with minimum boundary data.
+    *
+    * Expected Result : Transaction data should be updated with minimum boundary data 
+    *******************************************************************************************************/
+    it('TC-019: Date Field: Using Minimum Boundary Date', async function ()
+    {
+        console.log('🔎 TC-019: Date Field: Using Minimum Boundary Date');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('shopping');
+        await page.selectDate('1900-01-01');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data updated with minimum boundary data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.date).to.equal('1900-01-01');
+        console.log('✅ Last transaction data updated with minimum boundary data, assertion passed');
+
+    });
+    
+    
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-020
+    •⁠ ⁠Test Case : Maximum Boundary of Date.
+    *
+    •⁠ ⁠Description:  Test when user use maximum boundary date and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. select maximum boundary date "2099-12-31". 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "transport".
+    *                        - Date: "2099-12-31"
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with maximum boundary data.
+    *
+    * Expected Result : Transaction data should be updated with maximum boundary date 
+    *******************************************************************************************************/
+    it('TC-020: Date Field: Using Maximum Boundary Date', async function ()
+    {
+        console.log('🔎 TC-020: Date Field: Using Maximum Boundary Date');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('transport');
+        await page.selectDate('2099-12-31');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data updated with maximum boundary date.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.date).to.equal('2099-12-31');
+        console.log('✅ Last transaction data updated with maximum boundary data, assertion passed');
+
+    });     
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-021
+    •⁠ ⁠Test Case : Below Minimum Boundary of Date.
+    *
+    •⁠ ⁠Description:  Test when user use below minimum boundary date and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. select below minimum boundary date "1899-12-31". 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "shopping".
+    *                        - Date: "1899-12-31"
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should NOT be updated with below minimum boundary data.
+    *
+    * Expected Result : Transaction data should NOT be updated with below minimum boundary data 
+    *******************************************************************************************************/
+    it('TC-021: Date Field: Using Below Minimum Boundary Date', async function ()
+    {
+        console.log('🔎 TC-021: Date Field: Using Below Minimum Boundary Date');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('shopping');
+        await page.selectDate('1899-12-31');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with below minimum boundary data.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.date).not.equal('1899-12-31');
+        console.log('✅ Last transaction data updated with below minimum boundary data, assertion passed');
+
+    });    
+
+
+
+});
+
+
+
+
+/*============================================================================================================================================== *
+ *                                                   Test Suite for Note Field                                                             *
+ *===============================================================================================================================================*/
+
+describe('Amount Field Test Suite', function () 
+{
+ let driver;
+ let page;
+ let overview;
+
+ beforeEach(async function () 
+ { 
+    console.log('\n🟢 Step 1: beforeEach started');
+     
+     try {
+         console.log('🟢 Step 2: About to create driver...');
+         
+         driver = await createDriver();
+         
+         console.log('🟢 Step 3: Driver created successfully!');
+         
+         const htmlPath = path.join(__dirname, '..', '..', 'App', 'finance_tracker_app.html');
+         console.log('🟢 Step 4: HTML Path:', htmlPath);
+         
+         const fileUrl = 'file:///' + htmlPath.replace(/\\/g, '/');
+         console.log('🟢 Step 5: File URL:', fileUrl);
+         
+         await driver.get(fileUrl);
+         console.log('🟢 Step 6: Navigated to page');
+         
+         await driver.manage().window().maximize();
+         console.log('🟢 Step 7: Window maximized');
+         
+         page = new FinanceTrackerPage(driver);
+         overview = new FinancialOverview(driver);
+         transcationlist = new TransactionList(driver);
+         console.log('🟢 Step 8: Page object created\n');
+         
+     } 
+     catch (error)
+     {
+        console.log('\n🔴 ERROR:', error.message);
+         throw error;
+     }
+     
+     
+ });
+
+ afterEach(async function () 
+ {
+    console.log('\n🔒 Closing browser...');
+     await driver.quit();
+ });
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-022
+    •⁠ ⁠Test Case : One Character at Note Field.
+    *
+    •⁠ ⁠Description:  Test when user use write one character at note field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. write one character at note field. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "shopping".
+    *                        - Date: "today date"
+    *                        - Note: "b".
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with one character at note.
+    *
+    * Expected Result : Transaction data should be updated with one character at note. 
+    *******************************************************************************************************/
+    it('TC-022: Note Field: One Character at Note Field', async function ()
+    {
+        console.log('🔎 TC-022: Note Field: One Character at Note Field');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('shopping');
+        await page.fillNotes('b');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data updated with one character at note.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.note).to.equal('b');
+        console.log('✅ Last transaction data updated with one character at note, assertion passed');
+
+    });     
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-023
+    •⁠ ⁠Test Case : Maximum Characters at Note Field.
+    *
+    •⁠ ⁠Description:  Test when user use write one maximum characters at note field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. write maximum characters at note field (200) char. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "shopping".
+    *                        - Date: "today date"
+    *                        - Note: "This is a long test note created to verify the maximum character handling of the note input field in the finance tracker application and ensure proper storage without truncation or errors.".
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be updated with maximum characters at note.
+    *
+    * Expected Result : Transaction data should be updated with maximum characters at note. 
+    *******************************************************************************************************/
+    it('TC-023: Note Field: Maximum Characters at Note Field', async function ()
+    {
+        console.log('🔎 TC-023: Note Field: Maximum Characters at Note Field');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('shopping');
+        await page.fillNotes('lbrpyxuiobnrcgjffsihvnsvclpaykhixoafasxgfktdzdotadliuqokwibwjvgnynizaexvbgbglglpjeuphsurimofanekpxpekbnbzpiktkrabtlbrpkdjwbazczrkwxrjypxqfwnboxpsvlbbulgdtzreigqaqfnwjerhtdxlmuxfltnkpjkbvcalarlsoehoits');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data updated with maximum characters at note.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.note).to.equal('lbrpyxuiobnrcgjffsihvnsvclpaykhixoafasxgfktdzdotadliuqokwibwjvgnynizaexvbgbglglpjeuphsurimofanekpxpekbnbzpiktkrabtlbrpkdjwbazczrkwxrjypxqfwnboxpsvlbbulgdtzreigqaqfnwjerhtdxlmuxfltnkpjkbvcalarlsoehoits');
+        console.log('✅ Last transaction data updated with maximum characters at note, assertion passed');
+
+    }); 
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-024
+    •⁠ ⁠Test Case : Above Maximum Characters at Note Field.
+    *
+    •⁠ ⁠Description:  Test when user use write one above maximum characters at note field and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. write above maximum characters at note field (201) char. 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "shopping".
+    *                        - Date: "today date"
+    *                        - Note: "albrpyxuiobnrcgjffsihvnsvclpaykhixoafasxgfktdzdotadliuqokwibwjvgnynizaexvbgbglglpjeuphsurimofanekpxpekbnbzpiktkrabtlbrpkdjwbazczrkwxrjypxqfwnboxpsvlbbulgdtzreigqaqfnwjerhtdxlmuxfltnkpjkbvcalarlsoehoits".
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should be NOT updated with above maximum characters at note.
+    *
+    * Expected Result : Transaction data should be NOT updated with above maximum characters at note. 
+    *******************************************************************************************************/
+    it('TC-024: Note Field: Above Maximum Characters at Note Field', async function ()
+    {
+        console.log('🔎 TC-024: Note Field: Above Maximum Characters at Note Field');
+        // Step 1: Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+
+        // Step 2: Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('\n✅ Header assertion passed!\n');
+
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('shopping');
+        await page.fillNotes('albrpyxuiobnrcgjffsihvnsvclpaykhixoafasxgfktdzdotadliuqokwibwjvgnynizaexvbgbglglpjeuphsurimofanekpxpekbnbzpiktkrabtlbrpkdjwbazczrkwxrjypxqfwnboxpsvlbbulgdtzreigqaqfnwjerhtdxlmuxfltnkpjkbvcalarlsoehoits');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+        
+        // Step 6: Verify Last Transaction data NOT updated with above maximum characters at note.
+        const lastTransaction = await transcationlist.getLastTransactionData();
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.note).not.equal('albrpyxuiobnrcgjffsihvnsvclpaykhixoafasxgfktdzdotadliuqokwibwjvgnynizaexvbgbglglpjeuphsurimofanekpxpekbnbzpiktkrabtlbrpkdjwbazczrkwxrjypxqfwnboxpsvlbbulgdtzreigqaqfnwjerhtdxlmuxfltnkpjkbvcalarlsoehoits');
+        console.log('✅ Last transaction data NOT updated with above maximum characters at note, assertion passed');
+
+    });     
 
 
 
@@ -1370,6 +1796,11 @@ describe('Amount Field Test Suite', function ()
 
 
 });
+
+
+
+
+
 
 
 
