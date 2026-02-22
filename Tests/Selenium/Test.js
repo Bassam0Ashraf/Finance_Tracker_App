@@ -71,7 +71,17 @@
             page = new FinanceTrackerPage(driver);
             overview = new FinancialOverview(driver);
             transcationlist = new TransactionList(driver);
-            console.log('🟢 Step 8: Page object created\n');
+            console.log('🟢 Step 8: Page object created');
+
+        // Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 10000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+        console.log('🟢 Step 9: Verify that page opened successfully.');
+
+        // Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('✅ Header assertion passed!\n');              
             
         } catch (error)
         {
@@ -111,14 +121,6 @@
     it('TC-001: Empty Description Field', async function ()
     {
         console.log('🔎 TC-001: Empty Description Field:');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillAmount(100);
@@ -225,14 +227,6 @@
     it('TC-002: whitespace only at Description Field', async function ()
     {
         console.log('🔎 TC-002: whitespace only at Description Field:');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription(' ');
@@ -287,14 +281,6 @@
     it('TC-003: 1 character at Description Field (Min Lenght)', async function ()
     {
         console.log('🔎 TC-003: 1 character at Description Field (Min Lenght)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -370,14 +356,6 @@
     it('TC-004: 100 characters at Description Field (Max Lenght)', async function ()
     {
         console.log('🔎 TC-004: 100 characters at Description Field (Max Lenght)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O4');
@@ -418,14 +396,6 @@
     it('TC-005: Exceeding characters limit at Description Field (Out of Boundries)', async function ()
     {
         console.log('🔎 TC-005: Exceeding characters limit at Description Field (Out of Boundries)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O41');
@@ -493,7 +463,17 @@ describe('Amount Field Test Suite', function ()
          page = new FinanceTrackerPage(driver);
          overview = new FinancialOverview(driver);
          transcationlist = new TransactionList(driver);
-         console.log('🟢 Step 8: Page object created\n');
+         console.log('🟢 Step 8: Page object created');
+
+        // Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 10000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+        console.log('🟢 Step 9: Verify that page opened successfully.');
+
+        // Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('✅ Header assertion passed!\n');           
          
      } 
      catch (error)
@@ -534,14 +514,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-006: Write Negative Number at amount field (Out of Boundries)', async function ()
     {
         console.log('🔎 TC-006: Write Negative Number at amount field (Out of Boundries)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -587,14 +559,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-007: Write Minimum Number at amount field (Min Amount)', async function ()
     {
         console.log('🔎 TC-007: Write Minimum Number at amount field (Min Amount)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -635,14 +599,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-008: Write Maximum Number at amount field (Max Amount)', async function ()
     {
         console.log('🔎 TC-008: Write Maximum Number at amount field (Max Amount)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -683,14 +639,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-009: Try to Exceeding Maximum Number at amount field (Out of Boundries)', async function ()
     {
         console.log('🔎 TC-009: Try to Exceeding Maximum Number at amount field (Out of Boundries)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -735,14 +683,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-010: Try to write three decimal Number at amount field (0.001)', async function ()
     {
         console.log('🔎 TC-010: Try to write three decimal Number at amount field (0.001)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -787,14 +727,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-011: Test when user forget to write number at amount field', async function ()
     {
         console.log('🔎 TC-011: Test when user forget to write number at amount field');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -859,7 +791,17 @@ describe('Amount Field Test Suite', function ()
          page = new FinanceTrackerPage(driver);
          overview = new FinancialOverview(driver);
          transcationlist = new TransactionList(driver);
-         console.log('🟢 Step 8: Page object created\n');
+         console.log('🟢 Step 8: Page object created');
+
+        // Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 10000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+        console.log('🟢 Step 9: Verify that page opened successfully.');
+
+        // Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('✅ Header assertion passed!\n');           
          
      } 
      catch (error)
@@ -900,14 +842,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-012: Empty Type Field', async function ()
     {
         console.log('🔎 TC-012: Empty Type Field');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n','✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -955,14 +889,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-013: Income Type Field', async function ()
     {
         console.log('🔎 TC-013: Income Type Field');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1030,14 +956,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-014: Expense Type Field', async function ()
     {
         console.log('🔎 TC-014: Expense Type Field');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1096,7 +1014,7 @@ describe('Amount Field Test Suite', function ()
  *                                                   Test Suite for Category Field                                                             *
  *===============================================================================================================================================*/
 
-describe('Amount Field Test Suite', function () 
+describe('Category Field Test Suite', function () 
 {
  let driver;
  let page;
@@ -1128,7 +1046,17 @@ describe('Amount Field Test Suite', function ()
          page = new FinanceTrackerPage(driver);
          overview = new FinancialOverview(driver);
          transcationlist = new TransactionList(driver);
-         console.log('🟢 Step 8: Page object created\n');
+         console.log('🟢 Step 8: Page object created');
+
+        // Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 10000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+        console.log('🟢 Step 9: Verify that page opened successfully.');
+
+        // Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('✅ Header assertion passed!\n');           
          
      } 
      catch (error)
@@ -1169,14 +1097,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-015: Category Field Empty', async function ()
     {
         console.log('🔎 TC-014: Category Field Empty');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1219,14 +1139,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-016: Category Field Special char (&)', async function ()
     {
         console.log('🔎 TC-016: Category Field Special char (&)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1258,7 +1170,7 @@ describe('Amount Field Test Suite', function ()
  *                                                   Test Suite for Date Field                                                             *
  *===============================================================================================================================================*/
 
-describe('Amount Field Test Suite', function () 
+describe('Date Field Test Suite', function () 
 {
  let driver;
  let page;
@@ -1290,7 +1202,17 @@ describe('Amount Field Test Suite', function ()
          page = new FinanceTrackerPage(driver);
          overview = new FinancialOverview(driver);
          transcationlist = new TransactionList(driver);
-         console.log('🟢 Step 8: Page object created\n');
+         console.log('🟢 Step 8: Page object created');
+
+        // Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 10000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+        console.log('🟢 Step 9: Verify that page opened successfully.');
+
+        // Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('✅ Header assertion passed!\n');           
          
      } 
      catch (error)
@@ -1326,21 +1248,11 @@ describe('Amount Field Test Suite', function ()
     *                   5. Click "Add Transaction".
     *                   6. Verify Last Transaction data should be updated with these data.
     *
-    * Expected Result : Transaction data should be updated with date 
+    * Expected Result : Transaction data should be updated with past date.
     *******************************************************************************************************/
     it('TC-017: Date Field: Test when user select an old date', async function ()
     {
         console.log('🔎 TC-017: Date Field: Test when user select an old date');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
-
-        //const today = new Date().toISOString().split('T')[0];
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1383,15 +1295,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-018: Date Field: Test when user use default date (today)', async function ()
     {
         console.log('🔎 TC-018: Date Field: Test when user use default date (today)');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
-
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1435,15 +1338,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-019: Date Field: Using Minimum Boundary Date', async function ()
     {
         console.log('🔎 TC-019: Date Field: Using Minimum Boundary Date');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
-
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1487,15 +1381,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-020: Date Field: Using Maximum Boundary Date', async function ()
     {
         console.log('🔎 TC-020: Date Field: Using Maximum Boundary Date');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
-
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1539,15 +1424,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-021: Date Field: Using Below Minimum Boundary Date', async function ()
     {
         console.log('🔎 TC-021: Date Field: Using Below Minimum Boundary Date');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
-
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1578,7 +1454,7 @@ describe('Amount Field Test Suite', function ()
  *                                                   Test Suite for Note Field                                                             *
  *===============================================================================================================================================*/
 
-describe('Amount Field Test Suite', function () 
+describe('Note Field Test Suite', function () 
 {
  let driver;
  let page;
@@ -1610,7 +1486,17 @@ describe('Amount Field Test Suite', function ()
          page = new FinanceTrackerPage(driver);
          overview = new FinancialOverview(driver);
          transcationlist = new TransactionList(driver);
-         console.log('🟢 Step 8: Page object created\n');
+         console.log('🟢 Step 8: Page object created');
+
+        // Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 10000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+        console.log('🟢 Step 9: Verify that page opened successfully.');
+
+        // Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('✅ Header assertion passed!\n');         
          
      } 
      catch (error)
@@ -1653,15 +1539,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-022: Note Field: One Character at Note Field', async function ()
     {
         console.log('🔎 TC-022: Note Field: One Character at Note Field');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
-
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1706,15 +1583,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-023: Note Field: Maximum Characters at Note Field', async function ()
     {
         console.log('🔎 TC-023: Note Field: Maximum Characters at Note Field');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
-
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1759,15 +1627,6 @@ describe('Amount Field Test Suite', function ()
     it('TC-024: Note Field: Above Maximum Characters at Note Field', async function ()
     {
         console.log('🔎 TC-024: Note Field: Above Maximum Characters at Note Field');
-        // Step 1: Verify that page opened successfully.
-        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 5000);   // By.css('.header h1').
-        const HeaderPageText = await HeaderPage.getText();
-
-        // Step 2: Verify that header text is "Personal Finance Tracker".
-        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
-        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('\n✅ Header assertion passed!\n');
-
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1778,7 +1637,7 @@ describe('Amount Field Test Suite', function ()
 
         // Step 5: Cilck on add transaction button.
         await page.addTransaction();
-        
+
         // Step 6: Verify Last Transaction data NOT updated with above maximum characters at note.
         const lastTransaction = await transcationlist.getLastTransactionData();
         console.log('Last transaction data:', lastTransaction);
