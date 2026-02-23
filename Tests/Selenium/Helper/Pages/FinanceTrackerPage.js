@@ -213,7 +213,7 @@ class TransactionList
         this.browserdriver = browserdriver;
     }
 
-    async getLastTransactionData()
+    async TransactionData(index)
     {
         console.log('Newest Transaction List Data:');
         // Step 1: Get all transactions
@@ -221,7 +221,7 @@ class TransactionList
         
 
         // Step 2: Return the last transaction (newest transaction)
-        const lastItem = await item[0];
+        const lastItem = await item[index];
 
 
         // Step 3: Get the description of last transaction.

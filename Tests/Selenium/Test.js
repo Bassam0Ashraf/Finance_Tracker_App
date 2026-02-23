@@ -81,7 +81,7 @@
         // Verify that header text is "Personal Finance Tracker".
         assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
         // expect(HeaderPageText).to.equal('Personal Finance Tracker');
-        console.log('✅ Header assertion passed!\n');              
+        console.log('✅ Header assertion passed!\n');            
             
         } catch (error)
         {
@@ -282,6 +282,8 @@
     {
         console.log('🔎 TC-003: 1 character at Description Field (Min Lenght)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -325,7 +327,7 @@
         console.log('✅ Total income changed assertion passed');
         */
         // Step 7: Verify Last Transaction data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
         //expect(lastTransaction.amount).to.equal('$ 100');
@@ -357,6 +359,8 @@
     {
         console.log('🔎 TC-004: 100 characters at Description Field (Max Lenght)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O4');
         await page.fillAmount(100);
@@ -367,7 +371,7 @@
         await page.addTransaction();
 
         // Step 7: Verify Last Transaction data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O4');
         console.log('✅ Last transaction data assertion passed');
@@ -397,6 +401,8 @@
     {
         console.log('🔎 TC-005: Exceeding characters limit at Description Field (Out of Boundries)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O41');
         await page.fillAmount(100);
@@ -407,7 +413,7 @@
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).not.equal('QR3POSZ2rqdbZgBnG6mIwIE7d9ZRsZ4RM0Qm5EhdTIv21mPS59yissZz9yBfo7rsqZFZHWC8Zlltl6cVOfnerJlaZFTjz4LQv2O41');
         console.log('✅ Last transaction data not updated with description out of boundries lenght assertion passed');
@@ -515,6 +521,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-006: Write Negative Number at amount field (Out of Boundries)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(-50);
@@ -525,7 +533,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).not.equal('a');
         console.log('✅ Last transaction data not updated with description out of boundries lenght assertion passed');
@@ -560,6 +568,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-007: Write Minimum Number at amount field (Min Amount)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(0.01);
@@ -570,7 +580,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.amount).to.equal('$ 0.01');
         console.log('✅ Last transaction data assertion passed');
@@ -600,6 +610,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-008: Write Maximum Number at amount field (Max Amount)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(999999.99);
@@ -610,7 +622,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.amount).to.equal('$ 999999.99');
         console.log('✅ Last transaction data assertion passed');
@@ -640,6 +652,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-009: Try to Exceeding Maximum Number at amount field (Out of Boundries)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(1000000.00);
@@ -650,7 +664,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.amount).not.equal('$ 1000000.00');
         console.log('✅ Last transaction data assertion passed and not be updated');
@@ -684,6 +698,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-010: Try to write three decimal Number at amount field (0.001)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(5.001);
@@ -694,7 +710,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.amount).not.equal('$ 5.001');
         console.log('✅ Last transaction data assertion passed and not be updated');
@@ -728,6 +744,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-011: Test when user forget to write number at amount field');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.selectType('income');
@@ -737,7 +755,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).not.equal('a');
         console.log('✅ Last transaction data assertion passed and not be updated');
@@ -843,6 +861,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-012: Empty Type Field');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -852,7 +872,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).not.equal('a');
         console.log('✅ Last transaction data assertion passed and not be updated');
@@ -890,6 +910,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-013: Income Type Field');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -907,7 +929,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
         expect(lastTransaction.amount).to.equal('$ 100');
@@ -957,6 +979,8 @@ describe('Amount Field Test Suite', function ()
     {
         console.log('🔎 TC-014: Expense Type Field');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -974,7 +998,7 @@ describe('Amount Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
         expect(lastTransaction.amount).to.equal('$ -100');
@@ -1098,6 +1122,8 @@ describe('Category Field Test Suite', function ()
     {
         console.log('🔎 TC-014: Category Field Empty');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -1107,7 +1133,7 @@ describe('Category Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
         expect(lastTransaction.amount).to.equal('$ 100');
@@ -1140,6 +1166,8 @@ describe('Category Field Test Suite', function ()
     {
         console.log('🔎 TC-016: Category Field Special char (&)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -1150,7 +1178,7 @@ describe('Category Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.description).to.equal('a');
         expect(lastTransaction.amount).to.equal('$ 100');
@@ -1254,6 +1282,8 @@ describe('Date Field Test Suite', function ()
     {
         console.log('🔎 TC-017: Date Field: Test when user select an old date');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -1265,7 +1295,7 @@ describe('Date Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with these data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.date).to.equal('2024-01-15');
         console.log('✅ Last transaction data updated with an old date, assertion passed');
@@ -1296,6 +1326,8 @@ describe('Date Field Test Suite', function ()
     {
         console.log('🔎 TC-018: Date Field: Test when user use default date (today)');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -1307,7 +1339,7 @@ describe('Date Field Test Suite', function ()
 
         // Step 6: Verify Last Transaction data updated with default date (today).
         const today = new Date().toISOString().split('T')[0];
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.date).to.equal(today);
         console.log('✅ Last transaction data updated with default date (today), assertion passed');
@@ -1339,6 +1371,8 @@ describe('Date Field Test Suite', function ()
     {
         console.log('🔎 TC-019: Date Field: Using Minimum Boundary Date');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -1350,7 +1384,7 @@ describe('Date Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with minimum boundary data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.date).to.equal('1900-01-01');
         console.log('✅ Last transaction data updated with minimum boundary data, assertion passed');
@@ -1382,6 +1416,8 @@ describe('Date Field Test Suite', function ()
     {
         console.log('🔎 TC-020: Date Field: Using Maximum Boundary Date');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -1393,7 +1429,7 @@ describe('Date Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with maximum boundary date.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.date).to.equal('2099-12-31');
         console.log('✅ Last transaction data updated with maximum boundary data, assertion passed');
@@ -1425,6 +1461,8 @@ describe('Date Field Test Suite', function ()
     {
         console.log('🔎 TC-021: Date Field: Using Below Minimum Boundary Date');
 
+        let index = 0;
+
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
         await page.fillAmount(100);
@@ -1436,7 +1474,7 @@ describe('Date Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data not updated with below minimum boundary data.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.date).not.equal('1899-12-31');
         console.log('✅ Last transaction data updated with below minimum boundary data, assertion passed');
@@ -1445,6 +1483,57 @@ describe('Date Field Test Suite', function ()
 
 
 
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-022
+    •⁠ ⁠Test Case : Above Maximum Boundary of Date.
+    *
+    •⁠ ⁠Description:  Test when user use above maximum boundary date and click on add transaction button.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully.
+    *                   3. select below minimum boundary date "1899-12-31". 
+    *                   4. Fill other field with these data required for the test:
+    *                        - Description: "a".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "shopping".
+    *                        - Date: "2100-01-01"
+    *                   5. Click "Add Transaction".
+    *                   6. Verify Last Transaction data should NOT be updated with above maximum boundary data.
+    *
+    * Expected Result : Transaction data should NOT be updated with above maximum boundary data 
+    *******************************************************************************************************/
+    it('TC-022: Date Field: Using Above Maximum Boundary Date', async function ()
+    {
+        console.log('🔎 TC-022: Date Field: Using Above Maximum Boundary Date');
+
+        let index = 0;
+
+        // Step 3 & 4: Fill other field with these data required for the test:
+        await page.fillDescription('a');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('shopping');
+        await page.selectDate('2100-01-01');
+
+        // Step 5: Cilck on add transaction button.
+        await page.addTransaction();
+
+        // Step 6: Verify Last Transaction data not updated with above maximum boundary data.
+        let lastTransaction = await transcationlist.TransactionData(index);
+        console.log('Last transaction data:', lastTransaction);
+        expect(lastTransaction.date).not.equal('2100-01-01');
+        console.log('✅ Last transaction data updated with above maximum boundary data, assertion passed');
+
+    });     
+
+
+
+
+/* Should do these things:
+    1- TC for above max boundary date. (Done)
+    2- TC add 3 transaction and see every transcation added succsfully.
+    3- extrem lenght of char move balance and delete btn out of screen.
+*/
 });
 
 
@@ -1517,7 +1606,7 @@ describe('Note Field Test Suite', function ()
 
 
     /*****************************************************************************************************
-    •⁠ ⁠Test ID : TC-022
+    •⁠ ⁠Test ID : TC-023
     •⁠ ⁠Test Case : One Character at Note Field.
     *
     •⁠ ⁠Description:  Test when user use write one character at note field and click on add transaction button.
@@ -1536,9 +1625,11 @@ describe('Note Field Test Suite', function ()
     *
     * Expected Result : Transaction data should be updated with one character at note. 
     *******************************************************************************************************/
-    it('TC-022: Note Field: One Character at Note Field', async function ()
+    it('TC-023: Note Field: One Character at Note Field', async function ()
     {
-        console.log('🔎 TC-022: Note Field: One Character at Note Field');
+        console.log('🔎 TC-023: Note Field: One Character at Note Field');
+
+        let index = 0;
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1551,7 +1642,7 @@ describe('Note Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with one character at note.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.note).to.equal('b');
         console.log('✅ Last transaction data updated with one character at note, assertion passed');
@@ -1561,7 +1652,7 @@ describe('Note Field Test Suite', function ()
 
 
     /*****************************************************************************************************
-    •⁠ ⁠Test ID : TC-023
+    •⁠ ⁠Test ID : TC-024
     •⁠ ⁠Test Case : Maximum Characters at Note Field.
     *
     •⁠ ⁠Description:  Test when user use write one maximum characters at note field and click on add transaction button.
@@ -1580,9 +1671,11 @@ describe('Note Field Test Suite', function ()
     *
     * Expected Result : Transaction data should be updated with maximum characters at note. 
     *******************************************************************************************************/
-    it('TC-023: Note Field: Maximum Characters at Note Field', async function ()
+    it('TC-024: Note Field: Maximum Characters at Note Field', async function ()
     {
-        console.log('🔎 TC-023: Note Field: Maximum Characters at Note Field');
+        console.log('🔎 TC-024: Note Field: Maximum Characters at Note Field');
+
+        let index = 0;
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1595,7 +1688,7 @@ describe('Note Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data updated with maximum characters at note.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.note).to.equal('lbrpyxuiobnrcgjffsihvnsvclpaykhixoafasxgfktdzdotadliuqokwibwjvgnynizaexvbgbglglpjeuphsurimofanekpxpekbnbzpiktkrabtlbrpkdjwbazczrkwxrjypxqfwnboxpsvlbbulgdtzreigqaqfnwjerhtdxlmuxfltnkpjkbvcalarlsoehoits');
         console.log('✅ Last transaction data updated with maximum characters at note, assertion passed');
@@ -1605,7 +1698,7 @@ describe('Note Field Test Suite', function ()
 
 
     /*****************************************************************************************************
-    •⁠ ⁠Test ID : TC-024
+    •⁠ ⁠Test ID : TC-025
     •⁠ ⁠Test Case : Above Maximum Characters at Note Field.
     *
     •⁠ ⁠Description:  Test when user use write one above maximum characters at note field and click on add transaction button.
@@ -1624,9 +1717,11 @@ describe('Note Field Test Suite', function ()
     *
     * Expected Result : Transaction data should be NOT updated with above maximum characters at note. 
     *******************************************************************************************************/
-    it('TC-024: Note Field: Above Maximum Characters at Note Field', async function ()
+    it('TC-025: Note Field: Above Maximum Characters at Note Field', async function ()
     {
-        console.log('🔎 TC-024: Note Field: Above Maximum Characters at Note Field');
+        console.log('🔎 TC-025: Note Field: Above Maximum Characters at Note Field');
+
+        let index = 0;
 
         // Step 3 & 4: Fill other field with these data required for the test:
         await page.fillDescription('a');
@@ -1639,10 +1734,180 @@ describe('Note Field Test Suite', function ()
         await page.addTransaction();
 
         // Step 6: Verify Last Transaction data NOT updated with above maximum characters at note.
-        const lastTransaction = await transcationlist.getLastTransactionData();
+        let lastTransaction = await transcationlist.TransactionData(index);
         console.log('Last transaction data:', lastTransaction);
         expect(lastTransaction.note).not.equal('albrpyxuiobnrcgjffsihvnsvclpaykhixoafasxgfktdzdotadliuqokwibwjvgnynizaexvbgbglglpjeuphsurimofanekpxpekbnbzpiktkrabtlbrpkdjwbazczrkwxrjypxqfwnboxpsvlbbulgdtzreigqaqfnwjerhtdxlmuxfltnkpjkbvcalarlsoehoits');
         console.log('✅ Last transaction data NOT updated with above maximum characters at note, assertion passed');
+
+    });     
+
+
+});
+
+
+
+/*============================================================================================================================================== *
+ *                                                   Test Suite for Transaction List                                                             *
+ *===============================================================================================================================================*/
+
+describe(' Transaction List Test Suite', function () 
+{
+ let driver;
+ let page;
+ let overview;
+
+ beforeEach(async function () 
+ { 
+    console.log('\n🟢 Step 1: beforeEach started');
+     
+     try {
+         console.log('🟢 Step 2: About to create driver...');
+         
+         driver = await createDriver();
+         
+         console.log('🟢 Step 3: Driver created successfully!');
+         
+         const htmlPath = path.join(__dirname, '..', '..', 'App', 'finance_tracker_app.html');
+         console.log('🟢 Step 4: HTML Path:', htmlPath);
+         
+         const fileUrl = 'file:///' + htmlPath.replace(/\\/g, '/');
+         console.log('🟢 Step 5: File URL:', fileUrl);
+         
+         await driver.get(fileUrl);
+         console.log('🟢 Step 6: Navigated to page');
+         
+         await driver.manage().window().maximize();
+         console.log('🟢 Step 7: Window maximized');
+         
+         page = new FinanceTrackerPage(driver);
+         overview = new FinancialOverview(driver);
+         transcationlist = new TransactionList(driver);
+         console.log('🟢 Step 8: Page object created');
+
+        // Verify that page opened successfully.
+        const HeaderPage = await driver.wait(until.elementLocated(By.css('.header h1')), 10000);   // By.css('.header h1').
+        const HeaderPageText = await HeaderPage.getText();
+        console.log('🟢 Step 9: Verify that page opened successfully.');
+
+        // Verify that header text is "Personal Finance Tracker".
+        assert.equal(HeaderPageText, "Personal Finance Tracker", 'Header text should be "Personal Finance Tracker"');
+        // expect(HeaderPageText).to.equal('Personal Finance Tracker');
+        console.log('✅ Header assertion passed!\n');         
+         
+     } 
+     catch (error)
+     {
+        console.log('\n🔴 ERROR:', error.message);
+         throw error;
+     }
+     
+     
+ });
+
+ afterEach(async function () 
+ {
+    console.log('\n🔒 Closing browser...');
+     await driver.quit();
+ });
+
+
+
+    /*****************************************************************************************************
+    •⁠ ⁠Test ID : TC-026
+    •⁠ ⁠Test Case : Three Transaction in a Row.
+    *
+    •⁠ ⁠Description:  Test when user add three transaction and check if they placed correctly at transaction list.
+    •⁠ ⁠Test Procedure :  1. Navigate to page's App.
+    *                   2. Verify that page opened successfully. 
+    *                   3. Fill first transaction with these data required for the test:
+    *                        - Description: "test for FIRST transaction".   
+    *                        - Amount: 100.
+    *                        - Type: "income".
+    *                        - Category: "shopping".
+    *                        - Date: "today date"
+    *                        - Note: "FIRST transaction".
+    *                   4. Fill second transaction with these data required for the test:
+    *                        - Description: "test for SECOND transaction".   
+    *                        - Amount: 500.
+    *                        - Type: "income".
+    *                        - Category: "salary".
+    *                        - Date: "today date"
+    *                        - Note: "SECOND transaction".
+    *                   5. Fill third transaction with these data required for the test:
+    *                        - Description: "test for THIRD transaction".   
+    *                        - Amount: 100.
+    *                        - Type: "expense".
+    *                        - Category: "Entertainment".
+    *                        - Date: "today date"
+    *                        - Note: "THIRD transaction".
+    *                   6. Verify Last Three Transaction data should be updated and placed correctly at transaction list.
+    *
+    * Expected Result : Transaction data should be updated with above data and third transaction should be at top of list and first at the bottom.
+    *******************************************************************************************************/
+    it('TC-026: Note Field: Above Maximum Characters at Note Field', async function ()
+    {
+        console.log('🔎 TC-026: Note Field: Above Maximum Characters at Note Field');
+
+        let index = 0;
+
+        // Step 3: Fill first transaction:
+        await page.fillDescription('test for FIRST transaction');
+        await page.fillAmount(100);
+        await page.selectType('income'); 
+        await page.selectCategory('shopping');
+        await page.fillNotes('FIRST transaction');
+        await page.addTransaction();
+
+        // Step 4: Fill second transaction:
+        await page.fillDescription('test for SECOND transaction');
+        await page.fillAmount(500);
+        await page.selectType('income'); 
+        await page.selectCategory('salary');
+        await page.fillNotes('SECOND transaction');
+        await page.addTransaction();
+
+        // Step 5: Fill third transaction:
+        await page.fillDescription('test for THIRD transaction');
+        await page.fillAmount(100);
+        await page.selectType('expense'); 
+        await page.selectCategory('Entertainment');
+        await page.fillNotes('THIRD transaction');        
+        await page.addTransaction();
+
+
+        // Step 6: Verify all three Transaction data updated and placed correctly at transaction list.
+        // Verify third transaction should be at top of transaction list.
+        let lastTransaction = await transcationlist.TransactionData(index);
+        console.log('THIRD transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('test for THIRD transaction');
+        expect(lastTransaction.amount).to.equal('$ -100');
+        expect(lastTransaction.type.toLowerCase()).to.equal('expense'.toLowerCase());
+        expect(lastTransaction.categoryDisplay.toLowerCase()).to.equal('Entertainment'.toLowerCase());
+        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('entertainment'.toLowerCase());
+        expect(lastTransaction.note).to.equal('THIRD transaction');
+        console.log('✅ THIRD transaction data updated and placed correctly at the top of transaction list, assertion passed');
+
+        // Verify second transaction should be at middle of transaction list.
+        lastTransaction = await transcationlist.TransactionData(index + 1);
+        console.log('SECOND transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('test for SECOND transaction');
+        expect(lastTransaction.amount).to.equal('$ 500');
+        expect(lastTransaction.type.toLowerCase()).to.equal('income'.toLowerCase());
+        expect(lastTransaction.categoryDisplay.toLowerCase()).to.equal('salary'.toLowerCase());
+        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('salary'.toLowerCase());
+        expect(lastTransaction.note).to.equal('SECOND transaction');
+        console.log('✅ THIRD transaction data updated and placed correctly at the middle of transaction list, assertion passed');
+        
+        // Verify first transaction should be at bottom of transaction list.
+        lastTransaction = await transcationlist.TransactionData(index + 2);
+        console.log('FIRST transaction data:', lastTransaction);
+        expect(lastTransaction.description).to.equal('test for FIRST transaction');
+        expect(lastTransaction.amount).to.equal('$ 100');
+        expect(lastTransaction.type.toLowerCase()).to.equal('income'.toLowerCase());
+        expect(lastTransaction.categoryDisplay.toLowerCase()).to.equal('Shopping'.toLowerCase());
+        expect(lastTransaction.categoryValue.toLowerCase()).to.equal('shopping'.toLowerCase());
+        expect(lastTransaction.note).to.equal('FIRST transaction');
+        console.log('✅ THIRD transaction data updated and placed correctly at the bottom of transaction list, assertion passed');        
 
     });     
 
@@ -1653,10 +1918,7 @@ describe('Note Field Test Suite', function ()
 
 
 
-
 });
-
-
 
 
 
