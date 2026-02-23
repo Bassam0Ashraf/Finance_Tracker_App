@@ -336,7 +336,7 @@
     });
 
 
-
+// UI overflow When description text is too long, it breaks the layout,Delete button pushed off-screen and Balance amount hidden
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-004
     •⁠ ⁠Test Case : 100 characters at Description Field (Max Lenght)
@@ -377,7 +377,7 @@
         console.log('✅ Last transaction data assertion passed');
     });
 
-
+// UI overflow When description text is too long, it breaks the layout,Delete button pushed off-screen and Balance amount hidden
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-005
     •⁠ ⁠Test Case : Exceeding characters limit at Description Field (Out of Boundries)
@@ -1437,7 +1437,7 @@ describe('Date Field Test Suite', function ()
     });     
 
 
-
+// Second bug found date with "1899-12-31" which is Below Minimum Boundary of Date accepted and added to Transaction List
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-021
     •⁠ ⁠Test Case : Below Minimum Boundary of Date.
@@ -1482,7 +1482,7 @@ describe('Date Field Test Suite', function ()
     });    
 
 
-
+// Third bug found date with "2100-01-01" which is Above Maximum Boundary of Date accepted and added to Transaction List
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-022
     •⁠ ⁠Test Case : Above Maximum Boundary of Date.
@@ -1696,7 +1696,8 @@ describe('Note Field Test Suite', function ()
     }); 
 
 
-
+// Fourth bug found note with above 200 char which is Above Maximum Boundary of note field accepted and added to Transaction List
+// UI overflow When note text is too long, it breaks the layout,Delete button pushed off-screen and Balance amount hidden
     /*****************************************************************************************************
     •⁠ ⁠Test ID : TC-025
     •⁠ ⁠Test Case : Above Maximum Characters at Note Field.
