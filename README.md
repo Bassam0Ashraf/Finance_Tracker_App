@@ -68,7 +68,7 @@ Finance_Tracker_App/
 │   └── finance_tracker_app.html         # The application under test
 │   └── Application_Specifications.md            # Application requirements & field specs
 ├── Reports/
-│   └── Test_Case_and_Bug_Report.docx    # Full test & bug report with screenshots
+│   └── Test_Case_and_Bug_Report.pdf    # Full test & bug report with screenshots
 │
 ├── Tests/
 │   └── Selenium/
