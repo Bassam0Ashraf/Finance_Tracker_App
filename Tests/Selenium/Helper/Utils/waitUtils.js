@@ -1,11 +1,12 @@
 /* ============================================================
  * Project      : Finance Tracker App
- * File         : locators.js
- * Description  : Driver factory for the merchant registration
+ * File         : waitUtils.js
+ * Description  : Reusable Selenium wait utilities and timeout
+ *                constants shared across all test suites.
  * Tester       : Bassam Ashraf
  * Date         : 2025-02-26
  * Version      : 1.0
- * Dependencies : Selenium WebDriver, Mocha, Chai
+ * Dependencies : Selenium WebDriver
  * ============================================================
  */
 
@@ -27,22 +28,22 @@ const SLEEP_LONG = 5000;
  *===============================================================================================================================================*/
 
 /**
- * Wait for an element to be located
- * parameters: {WebDriver} driver
- * parameters: {By} locator
- * parameters: {number} timeout
- * returns: {Promise<WebElement>}
+ * Waits until the specified element is located in the DOM and returns it.
+ * param   {WebDriver}        driver  - Active Selenium WebDriver instance.
+ * param   {By}               locator - Selenium locator strategy (e.g. By.id, By.css).
+ * param   {number}           timeout - Maximum wait time in milliseconds (default: TIMEOUT).
+ * returns {Promise<WebElement>}        The located DOM element.
  */
 async function waitFor(driver, locator, timeout = TIMEOUT) {
     return driver.wait(until.elementLocated(locator), timeout);
 }
 
 /**
- * Wait for an element to be visible
- * parameters: {WebDriver} driver
- * parameters: {By} locator
- * parameters: {number} timeout
- * returns: {Promise<WebElement>}
+ * Waits until the specified element is located AND visible on the page, then returns it.
+ * param   {WebDriver}        driver  - Active Selenium WebDriver instance.
+ * param   {By}               locator - Selenium locator strategy (e.g. By.id, By.css).
+ * param   {number}           timeout - Maximum wait time in milliseconds (default: TIMEOUT).
+ * returns {Promise<WebElement>}        The located and visible DOM element.
  */
 async function waitVisible(driver, locator, timeout = TIMEOUT) {
     const el = await waitFor(driver, locator, timeout);
@@ -51,21 +52,21 @@ async function waitVisible(driver, locator, timeout = TIMEOUT) {
 }
 
 /**
- * Wait for an alert to be present
- * parameters: {WebDriver} driver
- * parameters: {number} timeout
- * returns: {Promise<Alert>}
+ * Waits until a browser alert dialog is present and returns it.
+ * param   {WebDriver}    driver  - Active Selenium WebDriver instance.
+ * param   {number}       timeout - Maximum wait time in milliseconds (default: TIMEOUT).
+ * returns {Promise<Alert>}         The alert object, ready to be accepted or dismissed.
  */
 async function waitForAlert(driver, timeout = TIMEOUT) {
     return driver.wait(until.alertIsPresent(), timeout);
 }
 
 /**
- * Wait for elements to be located and return all matching elements
- * parameters: {WebDriver} driver
- * parameters: {By} locator
- * parameters: {number} timeout
- * returns: {Promise<WebElement[]>}
+ * Waits until at least one element matching the locator exists, then returns ALL matching elements.
+ * param   {WebDriver}          driver  - Active Selenium WebDriver instance.
+ * param   {By}                 locator - Selenium locator strategy (e.g. By.className, By.css).
+ * param   {number}             timeout - Maximum wait time in milliseconds (default: TIMEOUT).
+ * returns {Promise<WebElement[]>}        Array of all matching DOM elements.
  */
 async function waitForElements(driver, locator, timeout = TIMEOUT) {
     await driver.wait(until.elementLocated(locator), timeout);
@@ -73,10 +74,11 @@ async function waitForElements(driver, locator, timeout = TIMEOUT) {
 }
 
 /**
- * Get text from an element safely
- * parameters: {WebDriver} driver
- * parameters: {By} locator
- * returns: {Promise<string>}
+ * Attempts to retrieve the text content of an element. Returns an empty string if the element
+ * is not found or any error occurs, preventing the test from throwing unexpectedly.
+ * param   {WebDriver}     driver  - Active Selenium WebDriver instance.
+ * param   {By}            locator - Selenium locator strategy (e.g. By.id, By.css).
+ * returns {Promise<string>}         The element's text content, or an empty string on failure.
  */
 async function safeText(driver, locator) {
     try {

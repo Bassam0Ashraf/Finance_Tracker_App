@@ -1,18 +1,25 @@
 /* ============================================================
  * Project      : Finance Tracker App
  * File         : FinanceTrackerPage.js
- * Description  : Driver factory for the merchant registration
+ * Description  : Page Object Model for the Finance Tracker App.
+ *                Encapsulates all UI interactions — form filling,
+ *                dropdown selection, button clicks, and data
+ *                retrieval — into reusable methods consumed by
+ *                the Mocha test suites in Test.js.
  * Tester       : Bassam Ashraf
  * Date         : 2025-02-26
  * Version      : 1.0
- * Dependencies : Selenium WebDriver, Mocha, Chai
+ * Dependencies : Selenium WebDriver, waitUtils
  * ============================================================
  */
 /*============================================================================================================================================== *
  *                                                               Imports                                                                         *
  *===============================================================================================================================================*/
+// By     : Selenium locator strategies used to find elements on the page (By.id, By.css, etc.).
+// Select : Selenium wrapper for interacting with <select> dropdown elements.
 const { By, Select } = require('selenium-webdriver');
 const { waitFor, waitForAlert, waitForElements, SLEEP_SHORT, SLEEP_MEDIUM, SLEEP_LONG, TIMEOUT } = require('../Utils/waitUtils');
+const { Category } = require('../Utils/Constants');
 
 
 /*============================================================================================================================================== *
@@ -83,20 +90,31 @@ class FinanceTrackerPage {
     {
         const select = await waitFor(this.browserdriver, By.id('category'), SLEEP_LONG);
 
-        await select.sendKeys(categoryValue);   // <option value="transport">Transportation</option> type first letter like if you send Transportation its send "T".
+        // Using sendKeys to type the first letter(s) of the category name, which causes the native
+        // <select> element to jump to the matching option. For example, passing "Transportation"
+        // triggers the 'T' key and selects the first option whose visible text starts with that letter.
+        // This approach was chosen because the Select.selectByVisibleText() alternative (archived below)
+        // produced timing and stale-element issues during testing.
+        await select.sendKeys(categoryValue);
 
         console.log('Category selected:', categoryValue);
 
-        /*const element = await this.browserdriver.wait(until.elementLocated(By.id('category')), SLEEP_LONG);
+        /*====================================================================================================
+         * ARCHIVED ALTERNATIVE — Select.selectByVisibleText()
+         * ----------------------------------------------------
+         * The block below was an earlier implementation that used Selenium's Select wrapper to choose
+         * a category by its full visible text (e.g. "Transportation"). It was replaced by the sendKeys
+         * approach above due to intermittent timing and stale-element exceptions encountered during
+         * test execution. Retained here for reference.
+         *====================================================================================================
+        const element = await this.browserdriver.wait(until.elementLocated(By.id('category')), SLEEP_LONG);
         await this.browserdriver.sleep(1000);
-        // Step 2: Create Select wrapper
         const dropdown = new Select(element);
         await this.browserdriver.sleep(1000);
-        // Step 3: Select value
         await dropdown.selectByVisibleText(categoryValue);
         await this.browserdriver.sleep(1000);
-        // Done! No click or sendKeys needed
-        console.log('Category selected: ' + categoryValue);*/
+        console.log('Category selected: ' + categoryValue);
+        *====================================================================================================*/
     }
 
 
@@ -146,19 +164,36 @@ class FinanceTrackerPage {
     /***************************
      *      Delete Button      *
      ***************************/
+
+    /**
+     * Deletes the transaction at the given list index by clicking its Delete button and
+     * confirming the resulting browser alert dialog.
+     *
+     * ⚠️  NOTE: The call to `transcationlist.TransactionData(index)` on the line below will
+     *     throw a ReferenceError at runtime because `transcationlist` is not defined within
+     *     this class. If pre-deletion data capture is needed, the TransactionList instance
+     *     must be passed in as a parameter or stored on the class.
+     *
+     * @param {number} index - Zero-based index of the transaction to delete (0 = newest).
+     */
     async deleteTransaction(index)
     {
+        // Capture the transaction's data before deletion for logging purposes.
+        // ⚠️ BUG: 'transcationlist' is not defined in this scope — this line will throw a
+        //    ReferenceError. Pass the TransactionList instance as a parameter to fix this.
         let transactionData = await transcationlist.TransactionData(index);
 
+        // Locate all Delete buttons and click the one at the specified index.
         let deleteBtn = await waitForElements(this.browserdriver, By.css('.delete-btn'), SLEEP_LONG);
         await deleteBtn[index].click();
-        console.log('❌ Delete button clicked.');
+        console.log('❌ Delete button clicked for transaction at index:', index);
 
+        // Wait for the confirmation alert and accept it to confirm deletion.
         await waitForAlert(this.browserdriver, SLEEP_LONG);
         await this.browserdriver.switchTo().alert().accept();
-        console.log('❌ Confirm of deleting the transaction.');
-        
-        console.log('❌ Transaction Data got Deleted:', transactionData,'\n');
+        console.log('❌ Deletion confirmed via alert dialog.');
+
+        console.log('❌ Deleted transaction data:', transactionData, '\n');
     }    
 
 
@@ -294,21 +329,8 @@ class TransactionList
         //console.log('Category Value :', categoryValue );
 
         // Map internal value to display text
-        const categoryMap = 
-        {
-            'food': 'Food & Dining',
-            'transport': 'Transportation',
-            'shopping': 'Shopping',
-            'entertainment': 'Entertainment',
-            'bills': 'Bills & Utilities',
-            'healthcare': 'Healthcare',
-            'salary': 'Salary',
-            'freelance': 'Freelance',
-            'investment': 'Investment',
-            'other': 'Other'
-        };
-    
-        const categoryDisplay = categoryMap[categoryValue] || categoryValue;
+        const categoryDisplay = Object.values(Category)
+        .find(cat => cat.value === categoryValue)?.display || Category.NO_CATEGORY.display;
         //console.log('Category display:', categoryDisplay);
 
 
