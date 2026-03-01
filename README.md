@@ -166,7 +166,7 @@ When tests run, you will see output similar to:
       ✔ TC-003: Minimum Length Description Field (1 Character)
       ...
 
-    27 passing (45s)
+    23 passing (45s)
     4 failing
 ```
 
