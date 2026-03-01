@@ -109,6 +109,12 @@ describe('Description Field Test Suite', function ()
      
  });
 
+ after(async function () 
+{
+ console.log('\n🔒 Closing browser...');
+  await driver.quit();
+});
+
  
  /*****************************************************************************************************
  * Test ID        : TC-001
