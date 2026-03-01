@@ -11,9 +11,6 @@
  * ============================================================
  */
 
-/*============================================================================================================================================== *
- *                                                               Imports                                                                         *
- *===============================================================================================================================================*/
 // createDriver       : Factory function that builds and returns a configured Chrome WebDriver instance.
 // waitFor            : Waits until a single element is located; returns that element.
 // SLEEP_SHORT/MEDIUM/LONG/TIMEOUT : Predefined wait duration constants used throughout the test suites.
@@ -2025,57 +2022,6 @@ after(async function ()
 
  });  
 
-
-
-
-
 });
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ============================================
-// LEGACY MANUAL TEST FUNCTION (archived)
-// ============================================
-// The manual testOpenApplication() function below was used during early
-// development to verify that the page opened correctly. It is no longer
-// needed because the same check is performed in every before() hook above.
-// It is retained here for reference only and is NOT executed by Mocha.
-
-/*
-async function testOpenApplication()
-{
- let driver = await new Builder().forBrowser('chrome').build();
- try {
-     const htmlPath = path.join(__dirname, '..', '..', 'App', 'finance_tracker_app.html');
-     const fileUrl = 'file:///' + htmlPath.replace(/\\/g, '/');
-     await driver.get(fileUrl);
-     await driver.manage().window().maximize();
-     await driver.sleep(2000);
-     const heading = await driver.findElement(By.css('h1')).getText();
-     if (heading.includes('Personal Finance Tracker')) {
-         console.log('✅ TEST PASSED: Application loaded correctly!');
-     } else {
-         console.log('❌ TEST FAILED: Unexpected heading:', heading);
-     }
-     await driver.sleep(3000);
- } catch (error) {
-     console.error('❌ TEST FAILED WITH ERROR:', error.message);
- } finally {
-     console.log('🔒 Closing browser...');
-     await driver.quit();
- }
-}
-// testOpenApplication(); // Uncomment to run manually via: node Test.js
-*/

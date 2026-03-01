@@ -1,1 +1,300 @@
-1
+# 💰 Personal Finance Tracker — Test Suite
+
+> Automated Selenium end-to-end test suite for the **Personal Finance Tracker** web application.
+> Covers 27 test cases across 7 test suites using Mocha, Chai, and Selenium WebDriver.
+
+---
+
+## 📋 Table of Contents
+
+1. [Project Overview](#1-project-overview)
+2. [Project Structure](#2-project-structure)
+3. [Prerequisites](#3-prerequisites)
+4. [Installation & Setup](#4-installation--setup)
+5. [Running the Tests](#5-running-the-tests)
+6. [Test Suites Overview](#6-test-suites-overview)
+7. [Test Results Summary](#7-test-results-summary)
+8. [Bugs Found](#8-bugs-found)
+9. [Key Files](#9-key-files)
+10. [Reports](#10-reports)
+
+---
+
+## 1. Project Overview
+
+The **Personal Finance Tracker** is a client-side web application for managing personal income and expense transactions. It calculates real-time balances and persists data using the browser's `localStorage` API.
+
+This repository contains a full **Selenium WebDriver** automation test suite written in JavaScript, structured using the **Page Object Model (POM)** pattern.
+
+| Item | Details |
+|------|---------|
+| Application | Personal Finance Tracker v1.0 |
+| Test Framework | Selenium WebDriver 4.x |
+| Test Runner | Mocha 11.x |
+| Assertions | Chai 6.x |
+| Browser | Google Chrome (Latest) |
+| Language | JavaScript (Node.js) |
+| Test Count | 27 Test Cases (TC-001 – TC-027) |
+| Bugs Found | 5 |
+
+---
+
+## 2. Project Structure
+
+```
+Finance_Tracker_App/
+│
+├── App/
+│   └── finance_tracker_app.html         # The application under test
+│   └── Application_Specifications.md            # Application requirements & field specs
+├── Reports/
+│   └── Test_Case_and_Bug_Report.docx    # Full test & bug report with screenshots
+│
+├── Tests/
+│   └── Selenium/
+│       ├── Helper/
+│       │   ├── Driver/
+│       │   │   └── driverHelper.js      # Chrome WebDriver factory
+│       │   ├── Pages/
+│       │   │   └── FinanceTrackerPage.js # Page Object Model (POM)
+│       │   └── Utils/
+│       │       ├── Constants.js         # TransactionType & Category constants
+│       │       └── waitUtils.js         # Selenium wait utilities & timeout constants
+│       └── Test.js                      # All 27 test cases (main test file)
+│
+├── package.json
+└── README.md
+```
+
+---
+
+## 3. Prerequisites
+
+Make sure the following are installed on your machine before getting started:
+
+| Requirement | Version | Download |
+|-------------|---------|---------|
+| **Node.js** | v18 or higher | [nodejs.org](https://nodejs.org) |
+| **npm** | v8 or higher | Included with Node.js |
+| **Google Chrome** | Latest stable | [google.com/chrome](https://www.google.com/chrome) |
+| **Git** | Any | [git-scm.com](https://git-scm.com) |
+
+> **Note:** `chromedriver` is installed automatically as an npm dependency — no manual download needed.
+
+---
+
+## 4. Installation & Setup
+
+### Step 1 — Clone the repository
+
+```bash
+git clone https://github.com/your-username/Finance_Tracker_App.git
+cd Finance_Tracker_App
+```
+
+### Step 2 — Install dependencies
+
+```bash
+npm install
+```
+
+This installs all required packages defined in `package.json`:
+
+| Package | Role |
+|---------|------|
+| `selenium-webdriver` | Browser automation |
+| `chromedriver` | Chrome WebDriver binary (auto-matched to Chrome version) |
+| `mocha` | Test runner |
+| `chai` | Assertion library |
+
+### Step 3 — Verify the app file exists
+
+The tests open the application directly from the file system. Make sure this file is present:
+
+```
+Finance_Tracker_App/App/finance_tracker_app.html
+```
+
+No web server is required — the tests use a `file:///` URL.
+
+---
+
+## 5. Running the Tests
+
+### Run all tests
+
+```bash
+npm test
+```
+
+This executes the following command defined in `package.json`:
+
+```bash
+mocha Test.js --timeout 60000
+```
+
+### Expected output
+
+When tests run, you will see output similar to:
+
+```
+  Automation Test For Finance Tracker App
+
+    Description Field Test Suite
+      ✔ TC-001: Empty Description Field
+      ✔ TC-002: whitespace only at Description Field
+      ✔ TC-003: Minimum Length Description Field (1 Character)
+      ...
+
+    23 passing (45s)
+    4 failing
+```
+
+> **Note:** 4 tests are **expected to fail** because they document confirmed bugs in the application (TC-009, TC-021, TC-022, TC-025). This is correct behaviour — the tests prove the bugs exist.
+
+### Timeout
+
+Each test suite opens a fresh Chrome browser window. The default Mocha timeout is set to **60 seconds** per test. If your machine is slow, increase it in `package.json`:
+
+```json
+"test": "mocha Test.js --timeout 90000"
+```
+
+---
+
+## 6. Test Suites Overview
+
+The 27 test cases are organised into 7 test suites. Each suite runs in its own browser session (one `before()` + `after()` hook per suite).
+
+| Suite | TCs | Description |
+|-------|-----|-------------|
+| **Description Field** | TC-001 – TC-005 | Empty, whitespace, min/max boundaries, exceeds max |
+| **Amount Field** | TC-006 – TC-011 | Negative, min/max boundaries, exceeds max, 3 decimals, empty |
+| **Type Field** | TC-012 – TC-014 | Empty (no selection), income, expense |
+| **Category Field** | TC-015 – TC-016 | Optional empty field, special character (&) |
+| **Date Field** | TC-017 – TC-022 | Past date, default (today), min/max boundaries, out-of-range |
+| **Note Field** | TC-023 – TC-025 | Min/max boundaries, exceeds max |
+| **Transaction List** | TC-026 – TC-027 | Reverse chronological ordering, delete transaction |
+
+### Test Techniques Used
+
+| Technique | Description | TCs |
+|-----------|-------------|-----|
+| **Boundary Value Analysis (BVA)** | Tests at exact min, max, min−1, and max+1 values | 16 TCs |
+| **Equivalence Partitioning (EP)** | Tests valid and invalid input partitions | 9 TCs |
+| **Functional Testing** | Tests complete user-facing workflows | 2 TCs |
+
+---
+
+## 7. Test Results Summary
+
+| Status | Count |
+|--------|-------|
+| ✅ Passed | 23 |
+| ❌ Failed | 4 |
+| **Total** | **27** |
+
+| TC ID | Test Case | Suite | Result |
+|-------|-----------|-------|--------|
+| TC-001 | Empty Description Field | Description | ✅ PASSED |
+| TC-002 | Whitespace-Only Description | Description | ✅ PASSED |
+| TC-003 | Minimum Length (1 char) | Description | ✅ PASSED |
+| TC-004 | Maximum Length (100 chars) | Description | ✅ PASSED |
+| TC-005 | Exceeds Maximum (101 chars) | Description | ✅ PASSED |
+| TC-006 | Negative Amount | Amount | ✅ PASSED |
+| TC-007 | Minimum Amount ($0.01) | Amount | ✅ PASSED |
+| TC-008 | Maximum Amount ($999,999.99) | Amount | ✅ PASSED |
+| **TC-009** | **Exceeds Maximum ($1,000,000.00)** | Amount | **❌ FAILED** |
+| TC-010 | Three Decimal Places (5.001) | Amount | ✅ PASSED |
+| TC-011 | Empty Amount Field | Amount | ✅ PASSED |
+| TC-012 | Empty Type Field | Type | ✅ PASSED |
+| TC-013 | Income Transaction Type | Type | ✅ PASSED |
+| TC-014 | Expense Transaction Type | Type | ✅ PASSED |
+| TC-015 | Category Field Empty | Category | ✅ PASSED |
+| TC-016 | Category with Special Char (&) | Category | ✅ PASSED |
+| TC-017 | Past Date (2024-01-15) | Date | ✅ PASSED |
+| TC-018 | Default Date (Today) | Date | ✅ PASSED |
+| TC-019 | Minimum Valid Date (1900-01-01) | Date | ✅ PASSED |
+| TC-020 | Maximum Valid Date (2099-12-31) | Date | ✅ PASSED |
+| **TC-021** | **Below Minimum Date (1899-12-31)** | Date | **❌ FAILED** |
+| **TC-022** | **Above Maximum Date (2100-01-01)** | Date | **❌ FAILED** |
+| TC-023 | Minimum Note Length (1 char) | Note | ✅ PASSED |
+| TC-024 | Maximum Note Length (200 chars) | Note | ✅ PASSED |
+| **TC-025** | **Exceeds Maximum Note (201 chars)** | Note | **❌ FAILED** |
+| TC-026 | Reverse Chronological Order | Transaction List | ✅ PASSED |
+| TC-027 | Delete Last Transaction | Transaction List | ✅ PASSED |
+
+---
+
+## 8. Bugs Found
+
+5 bugs were discovered during test execution. 4 are validation failures and 1 is a UI layout issue.
+
+| Bug ID | Title | Severity | Related TC | Spec Reference |
+|--------|-------|----------|------------|----------------|
+| **BUG-001** | Amount above $999,999.99 is accepted | 🔴 HIGH | TC-009 | Section 3.2 — Max Amount |
+| **BUG-002** | Date 1899-12-31 (below min) is accepted | 🟡 MEDIUM | TC-021 | Section 3.5 — Date Range |
+| **BUG-003** | Date 2100-01-01 (above max) is accepted | 🟡 MEDIUM | TC-022 | Section 3.5 — Date Range |
+| **BUG-004** | Notes field accepts 201+ characters | 🔴 HIGH | TC-025 | Section 3.6 — Max Note Length |
+| **BUG-005** | Long text causes UI layout overflow | 🟡 MEDIUM | TC-004, TC-025 | Section 5.1 — Responsive Design |
+
+> Full bug details, steps to reproduce, expected vs. actual results, and screenshots are documented in:
+> `Reports/Test_Case_and_Bug_Report.docx`
+
+---
+
+## 9. Key Files
+
+### `Tests/Selenium/Test.js`
+The main test file. Contains all 27 test cases organised into 7 `describe()` blocks. Each test case includes a full header comment with Test ID, technique, procedure, and expected result.
+
+### `Tests/Selenium/Helper/Pages/FinanceTrackerPage.js`
+Page Object Model with three classes:
+- **`FinanceTrackerPage`** — form interactions (fill description, amount, type, category, date, notes, submit, delete)
+- **`FinancialOverview`** — reads balance, total income, and total expenses values
+- **`TransactionList`** — reads transaction rows from the list and returns structured data objects
+
+### `Tests/Selenium/Helper/Utils/Constants.js`
+Defines `TransactionType` (`INCOME`, `EXPENSE`) and `Category` constants (e.g. `Category.SALARY.value`, `Category.BILLS.display`). Used throughout Test.js to avoid hardcoded strings.
+
+### `Tests/Selenium/Helper/Utils/waitUtils.js`
+Reusable Selenium wait helper functions:
+- `waitFor(driver, locator, timeout)` — waits for a single element
+- `waitForElements(driver, locator, timeout)` — waits and returns all matching elements
+- `waitForAlert(driver, timeout)` — waits for a browser alert dialog
+- `waitVisible(driver, locator, timeout)` — waits until element is visible
+- `safeText(driver, locator)` — returns element text or empty string on failure
+
+### `Tests/Selenium/Helper/Driver/driverHelper.js`
+Factory function `createDriver()` that resolves the local `chromedriver` binary path and returns a configured Chrome WebDriver instance.
+
+---
+
+## 10. Reports
+
+The `Reports/` folder contains the full test documentation:
+
+| File | Description |
+|------|-------------|
+| [Test_Case_and_Bug_Report.pdf](Reports/Test_Case_and_Bug_Report.pdf) | Complete test case report with all 27 TCs, pass/fail status, bug details, steps to reproduce, expected vs. actual results, and screenshots |
+
+---
+
+## Dependencies
+
+```json
+{
+  "dependencies": {
+    "chromedriver": "^145.0.4",
+    "selenium-webdriver": "^4.38.0"
+  },
+  "devDependencies": {
+    "chai": "^6.2.1",
+    "mocha": "^11.7.5"
+  }
+}
+```
+
+---
+
+*Tester: Bassam Ashraf — Personal Finance Tracker v1.0 — March 2026*
